@@ -11,9 +11,17 @@
   top: 0;
   left: 0;
   overflow: auto;
+
+  .telaCentral {
+    border: 1px solid purple !important;
+  }
 }
 
 .appFrame {
   width: 100%;
   height: 100%;
+}
+
+.telaCentral {
+  border: 1px solid purple !important;
 }

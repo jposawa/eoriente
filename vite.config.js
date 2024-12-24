@@ -14,8 +14,8 @@ export default defineConfig({
     },
 
     manifest: {
-      name: 'estrela-oriente',
-      short_name: 'e-oriente',
+      name: 'Estrela do Oriente - Fortaleza',
+      short_name: 'Estrela do Oriente',
       description: 'Aplicativo para Estrela do Oriente de Fortaleza',
       theme_color: '#336699',
     },
