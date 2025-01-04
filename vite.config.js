@@ -14,10 +14,10 @@ export default defineConfig({
     },
 
     manifest: {
-      name: 'Estrela do Oriente - Fortaleza',
-      short_name: 'Estrela do Oriente',
-      description: 'Aplicativo para Estrela do Oriente de Fortaleza',
-      theme_color: '#336699',
+      name: 'Estrela do Oriente Fortaleza',
+      short_name: 'Estrela Oriente',
+      description: 'Capitulo Charlotte Mendenhal',
+      theme_color: '#ffffff',
     },
 
     workbox: {

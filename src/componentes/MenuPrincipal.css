@@ -1,0 +1,32 @@
+.menuPrincipal {
+  width: 100%;
+  height: 20%;
+  display: flex;
+  overflow: auto;
+  /*border: 1px solid red;*/
+
+  li {
+   /* background: #c5e5f3;*/
+    background: #02acf5;
+    width: 8rem;
+    display: flex;
+    text-align: center;
+    gap: 0.1rem;
+    padding: 0.4rem 0;
+    color: #e1dfe5;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 4px solid #fff;
+    font-size: 1rem;
+    flex-shrink: 0; /* nao encolher para caber no container */
+    flex-grow: 0; /* nao crescer e nao preencher o container */
+    border-radius: 0.7rem;
+    span{
+      font-size: 2rem;
+    }
+    p{
+      font-size: 1rem;
+    }
+  }
+}
