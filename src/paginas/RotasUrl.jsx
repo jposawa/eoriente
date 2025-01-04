@@ -1,5 +1,5 @@
 import { Route, Routes } from "react-router-dom";
-import { Login } from "./login";
+import { Login } from "./login.jsx";
 import { ListaMembros } from "./ListaMembros";
 import { AlteraSenha } from "./AlteraSenha";
 import { CadastraMembros } from "./CadastraMembros";
