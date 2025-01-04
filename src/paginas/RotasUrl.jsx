@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
-import { Login } from "./login.jsx";
-import { ListaMembros } from "./ListaMembros";
-import { AlteraSenha } from "./AlteraSenha";
-import { CadastraMembros } from "./CadastraMembros";
+import { Login } from "./Login.jsx";
+import { ListaMembros } from "./ListaMembros.jsx";
+import { AlteraSenha } from "./AlteraSenha.jsx";
+import { CadastraMembros } from "./CadastraMembros.jsx";
 export const RotasUrl = () => {
   return(
     <Routes>
