@@ -83,9 +83,7 @@ export const EnviaFotoMembro = (props) => {
     <>
       <div className='containerFormEnviaFotoMembro'>
         <h3 className='tituloEnviaFotoMembro'>Enviando Foto Membro</h3>
-        <div>
-          <img className='fotoAtual' src={fotoAtual} />
-        </div>
+      
         <form onSubmit={handleSubmit}>
           <input type="file" name='enviaFoto' ref={hiddenFileInput} onChange={handleFileChange} />
 
@@ -105,7 +103,7 @@ export const EnviaFotoMembro = (props) => {
         <div className="crop-container">
           <Cropper
             image={image}
-            cropShape="rect"
+            cropShape="round"
             rotation={0}
             crop={crop}
             zoom={zoom}
