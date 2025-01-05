@@ -1,0 +1,49 @@
+.containerFormEnviaFotoMembro {
+  width: 100%;
+  height: 100%;
+  padding: 0.7rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  input {
+    margin-top: 5%;
+    font-size: 1.2rem;
+    display: none;
+  }
+
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  button {
+    width: 70%;
+    height: 2rem;
+    font-size: 1.2rem;
+  }
+}
+
+.tituloEnviaFotoMembro {
+  width: 100%;
+  background: rgb(244, 244, 144);
+  color: black;
+  text-align: center;
+  font-size: 1.3rem;
+  padding: 0.2rem;
+}
+
+.bt_envEnviaFotoMembro{
+  order: -1;
+  height: 3rem !important;
+}
+
+.crop-container {
+  .reactEasyCrop_Container {
+    margin-top: 20%;
+    height: 50%;
+  }
+}

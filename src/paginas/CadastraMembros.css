@@ -1,0 +1,53 @@
+.tituloCadMembro {
+  position: fixed;
+  background: #0ae1f9;
+  width: 100%;
+  color: #000;
+  text-align: center;
+  padding: 0.2rem;
+  font-size: 1.3rem;
+}
+.formCadMembro {
+  width: 100%;
+}
+.subTituloCadMembro {
+  background: #c4eaee;
+  width: 100%;
+  color: #000;
+  text-align: center;
+  padding: 0.2rem;
+  font-size: 1.1rem;
+}
+
+.corpoCadMembro {
+  width: 100%;
+  margin-top:8%;
+  padding: 0.2rem;
+  font-size: 1rem;
+  padding-left: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  >span {
+    display: flex;
+    justify-content:space-evenly;
+  }
+}
+
+.bt_cadMembro {
+  margin-top: 1.5rem;
+  width: 100%;
+  display: flex;
+  justify-content:space-around;
+  gap: 0.5rem;
+  >button {
+    width: 40%;
+    height: 2rem;
+    padding: 0.2rem;
+    font-size: 1.1rem;
+  }
+}
+
+.ocultaVinculoMaconico {
+  display: none;
+}

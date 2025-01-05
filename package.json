@@ -10,23 +10,36 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.5.2",
+    "@material-ui/core": "^4.12.4",
+    "antd": "^5.22.7",
     "axios": "^1.7.9",
+    "canvas": "^3.0.1",
+    "cropperjs": "^1.6.2",
+    "croppie": "^2.6.5",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-confirm-toast": "^2.0.2",
+    "react-cropper": "^2.3.3",
+    "react-croppie": "^1.0.0",
+    "react-dom": "^18.3.1",
+    "react-easy-crop": "^5.2.0",
+    "react-router-dom": "^7.1.1",
+    "react-toastify": "^11.0.2",
+    "recoil": "^0.7.7"
   },
   "devDependencies": {
-    "@types/react": "^18.3.18",
-    "@types/react-dom": "^18.3.5",
-    "@vite-pwa/assets-generator": "^0.2.6",
-    "@vitejs/plugin-react": "^4.3.4",
-    "eslint": "^8.57.1",
-    "eslint-plugin-react": "^7.37.3",
+    "@types/react": "^18.3.1",
+    "@types/react-dom": "^18.3.0",
+    "@vite-pwa/assets-generator": "^0.2.4",
+    "@vitejs/plugin-react": "^4.2.1",
+    "eslint": "^8.57.0",
+    "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.2",
-    "eslint-plugin-react-refresh": "^0.4.16",
-    "vite": "^5.4.11",
-    "vite-plugin-pwa": "^0.20.5",
-    "workbox-core": "^7.3.0",
-    "workbox-window": "^7.3.0"
+    "eslint-plugin-react-refresh": "^0.4.6",
+    "vite": "^5.2.10",
+    "vite-plugin-pwa": "^0.20.0",
+    "workbox-core": "^7.1.0",
+    "workbox-window": "^7.1.0"
   },
   "resolutions": {
     "sharp": "0.32.6",

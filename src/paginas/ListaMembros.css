@@ -1,0 +1,79 @@
+.tituloListaMembros{
+  background: rgb(3, 148, 3);
+  width: 100%;
+  color: #fff;
+  text-align: center;
+  padding: 0.2rem;
+  font-size: 1.3rem;
+}
+.listaMembros{
+  display: flex;
+  flex-direction: column;
+  gap:0.2rem;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  
+  li{
+    display: flex;
+    justify-content: space-between;
+    background: #c5e5f3;
+    padding:0.1rem;
+    padding-left: 0.5rem;
+    gap: 0.5rem;
+    &:nth-child(2n){ /* fazer estilo folha zebra */
+      background: #d6e8f0;
+    }
+    >div {
+      flex-wrap: wrap;
+    /*  border: 2px solid #fff;*/
+      height: 100%;
+    }
+  }
+}
+.fotoMembro{
+  --tamanhoContainerFoto: 5rem;
+  width: var(--tamanhoContainerFoto);
+  max-height: var(--tamanhoContainerFoto);
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: auto 0;
+  border: 2px solid white;
+  border-radius: 50%;
+  overflow: hidden;
+  /* padding: 0.5rem 0.2rem; */
+  img{
+    width: 100%;
+    height: 100%;
+   /* object-fit: cover;*/
+  }
+}
+.conteudo{
+  width: 100%;
+}
+.btsAcoes{
+  display: flex;
+  justify-content: flex-end;
+  gap:1.5rem;
+  padding-right: 1rem;
+  
+  >button {
+    &:first-child {
+      color: red;
+    }
+    font-size: 1.3rem;
+    color: #307002;
+  }
+}
+
+.modalEnviaFotoMembro {
+  height: 70vh !important;
+
+  .conteudoModal {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+}
