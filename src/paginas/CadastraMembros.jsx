@@ -1,3 +1,4 @@
+/* eslint-disable no-extra-boolean-cast */
 import React from "react";
 import './CadastraMembros.css'
 import { useNavigate, useParams } from "react-router-dom";
@@ -6,6 +7,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useUsuario } from "../compartilhados/hooks";
 import { MENSAGEM_ERRO } from "../compartilhados/constantes";
+import { formatarCPF, formatarTelefone } from "../compartilhados/funcoes";
 
 export const CadastraMembros = () => {
   const { id } = useParams();
@@ -48,7 +50,7 @@ export const CadastraMembros = () => {
         setRadioValueTipoSanguineo(resposta.data.tipoSanguineo);
         setRadioValueNivelAcesso(resposta.data.nivelAcesso);
         setRadioValueSituacao(resposta.data.situacao)
-      }).catch((erro) => {
+      }).catch(() => {
         toast.error("Erro na requisição, verifique sua conexão.")
       })
     }
@@ -85,7 +87,7 @@ export const CadastraMembros = () => {
         //  console.log(resposta.data);
         navigate('/listamembros');
       }).catch((erro) => {
-        toast.warn(resposta.data);
+        toast.warn(erro?.data);
         //  console.log(resposta.data);
       })
     }
@@ -102,7 +104,7 @@ export const CadastraMembros = () => {
         //  console.log(resposta.data);
         navigate('/listamembros');
       }).catch((erro) => {
-        toast.warn(resposta.data);
+        toast.warn(erro.data);
         //  console.log(resposta.data);
       })
     }
@@ -188,7 +190,7 @@ export const CadastraMembros = () => {
             <Input name="orgaoEmissor" type="text" size="8" defaultValue={dadosMembro?.orgaoEmissor} label="Orgão Emissor:" />
           </p>
           <p>
-            <Input name="cpf" type="tel" size="16" defaultValue={dadosMembro?.cpf} label="CPF:" />
+            <Input name="cpf" type="tel" size="16" defaultValue={dadosMembro?.cpf} label="CPF:" onChange={formatarCPF} />
           </p>
           <p>
             <Input name="email" type="email" size="35" defaultValue={dadosMembro?.email} label="E-mail:" />
@@ -222,7 +224,14 @@ export const CadastraMembros = () => {
             <Input name="complemento" type="text" size="35" defaultValue={dadosMembro?.complemento} label="Complemento:" />
           </p>
           <p>
-            <Input name="telResidencial" type="tel" size="16" defaultValue={dadosMembro?.telResidencial} label="Telefone:" />
+            <Input
+              name="telResidencial"
+              type="tel"
+              size="16"
+              defaultValue={dadosMembro?.telResidencial}
+              label="Telefone:"
+              onChange={formatarTelefone}
+            />
           </p>
           <h4 className="subTituloCadMembro">Dados Complementares</h4>
           <span>
