@@ -100,7 +100,7 @@ export const ListaMembros = () => {
                         </button>
                       </Popconfirm>
                       <button type="button" onClick={() => {
-                        defineModalEnviaFotoMembroAberto(membro.cadastro)
+                        defineModalEnviaFotoMembroAberto({cad:membro.cadastro, nome:membro.nome, arqFoto:membro.arquivoFoto})
                       }
                       }>
                         <CameraOutlined />
@@ -124,7 +124,7 @@ export const ListaMembros = () => {
         open={!!modalEnviaFotoMembroAberto}
         onClose={fechaModalEnviaFotoMembro}
       >
-        <EnviaFotoMembro carregaLista={buscarMembros} cadastro={modalEnviaFotoMembroAberto} onClose={fechaModalEnviaFotoMembro} />
+        <EnviaFotoMembro carregaLista={buscarMembros} dadosMembro={modalEnviaFotoMembroAberto} onClose={fechaModalEnviaFotoMembro} />
       </Modal>
     </>
   )
