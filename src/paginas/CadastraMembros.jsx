@@ -12,7 +12,7 @@ export const CadastraMembros = () => {
   const [dadosMembro, defineDadosMembro] = React.useState();
   const [vinculoMaconico, defineVinculoMaconico] = React.useState('');
   const navigate = useNavigate();
-  const { existeSessao } = useUsuario();
+  const { existeSessao, redirecionaAcessoRestrito } = useUsuario();
 
   const [radioValueDoadorSangue, setRadioValueDoadorSangue] = React.useState('');
   const radioDoadorSangue = (ev) => {
@@ -38,6 +38,8 @@ export const CadastraMembros = () => {
     setRadioValueSituacao(ev.target.value);
   }
   React.useEffect(() => {
+    redirecionaAcessoRestrito();
+
     if (id) {
       axios.get(`https://datasystem-ce.com.br/eOriente/api_eo_membros.php?id=${id}`).then((resposta) => {
         defineDadosMembro(resposta.data);
@@ -50,6 +52,7 @@ export const CadastraMembros = () => {
         toast.error("Erro na requisição, verifique sua conexão.")
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const cadAltMembro = (dados) => {
