@@ -8,3 +8,7 @@ export const SITUACAO_MEMBROS = {
 }
 
 export const PREFIXO = "eo";
+
+export const MENSAGEM_ERRO = {
+  LOGIN: "Favor efetuar login novamente",
+};

@@ -1,18 +1,18 @@
 import React from "react";
-import { usuarioLogadoAtom } from "../compartilhados/estados"
 import './CadastraMembros.css'
-import { useRecoilValue } from "recoil";
 import { useNavigate, useParams } from "react-router-dom";
 import { Input } from "../componentes";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useUsuario } from "../compartilhados/hooks";
+import { MENSAGEM_ERRO } from "../compartilhados/constantes";
 
 export const CadastraMembros = () => {
   const { id } = useParams();
   const [dadosMembro, defineDadosMembro] = React.useState();
   const [vinculoMaconico, defineVinculoMaconico] = React.useState('');
-  const usuarioLogado = useRecoilValue(usuarioLogadoAtom);
   const navigate = useNavigate();
+  const { existeSessao } = useUsuario();
 
   const [radioValueDoadorSangue, setRadioValueDoadorSangue] = React.useState('');
   const radioDoadorSangue = (ev) => {
@@ -54,6 +54,11 @@ export const CadastraMembros = () => {
 
   const cadAltMembro = (dados) => {
     dados.preventDefault(); // para nao dar o refresh
+    if (!existeSessao) {
+      toast.error(MENSAGEM_ERRO);
+      return;
+    }
+
     const { target } = dados; // pegar os inputs
     const novosDados = {}; // para Inputs(name) com mesmo nome dos campos do BD
     Object.keys(target).forEach((indiceForm) => {
