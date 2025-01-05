@@ -115,16 +115,16 @@ export const CadastraMembros = () => {
         <div className="corpoCadMembro">
           <h4 className="subTituloCadMembro">Dados Pessoais</h4>
           <p>
-            <Input name="cadastro" type="tel" size="6" defaultValue={dadosMembro?.cadastro} label="Cadastro:" />
+            <Input name="cadastro" type="tel" size="6" defaultValue={dadosMembro?.cadastro} label="Cadastro:" required />
           </p>
           <p>
-            <Input name="nome" type="text" size="35" defaultValue={dadosMembro?.nome} label="Nome:" />
+            <Input name="nome" type="text" size="35" defaultValue={dadosMembro?.nome} label="Nome:" required />
           </p>
           <p>
             <Input name="conhecidoPor" type="text" size="20" defaultValue={dadosMembro?.conhecidoPor} label="Conhecido(a) por:" />
           </p>
           <p>
-            <Input name="dataIniciacao" type="date" defaultValue={dadosMembro?.dataIniciacao} label="Data da Iniciação:" />
+            <Input name="dataIniciacao" type="date" defaultValue={dadosMembro?.dataIniciacao} label="Data da Iniciação:" required />
           </p>
           <p>
             <Input name="lojaPatrocinadora" type="text" size="35" defaultValue={dadosMembro?.lojaPatrocinadora} label="Loja Patrocinadora:" />
@@ -194,7 +194,7 @@ export const CadastraMembros = () => {
             <Input name="email" type="email" size="35" defaultValue={dadosMembro?.email} label="E-mail:" />
           </p>
           <p>
-            <Input name="telCelular" type="tel" size="16" defaultValue={dadosMembro?.telCelular} label="Celular:" />
+            <Input name="telCelular" type="tel" size="16" defaultValue={dadosMembro?.telCelular} label="Celular:" required />
           </p>
           <p>
             <Input name="telComercial" type="tel" size="16" defaultValue={dadosMembro?.telComercial} label="Tel.Comercial:" />
