@@ -3,12 +3,13 @@ import './EnviaFotoMembro.css'
 import { toast } from 'react-toastify';
 import Cropper from 'react-easy-crop';
 import { getCroppedImg } from '../compartilhados/funcoes';
+import { URL_FOTOS_MEMBROS } from '../compartilhados/constantes';
 //import Slider from "@material-ui/core/Slider";
 //import Cropper from 'react-cropper';
 //import './styles.css'
 
 export const EnviaFotoMembro = (props) => {
-  const { cadastro, onClose, carregaLista } = props;
+  const { dadosMembro, onClose, carregaLista, arquivoFoto } = props;
   const [file, setFile] = React.useState(null);
   const hiddenFileInput = React.useRef(null);
   const [crop, setCrop] = React.useState({ x: 0, y: 0 })
@@ -56,7 +57,7 @@ export const EnviaFotoMembro = (props) => {
 
     const formData = new FormData();
     formData.append('image', novoFile);
-    formData.append('cadastro', cadastro);
+    formData.append('cadastro', dadosMembro?.cad);
 
     try {
       const response = await fetch('https://datasystem-ce.com.br/eOriente/api_eo_enviaFotoServidor.php', {
@@ -83,12 +84,13 @@ export const EnviaFotoMembro = (props) => {
     <>
       <div className='containerFormEnviaFotoMembro'>
         <h3 className='tituloEnviaFotoMembro'>Enviando Foto Membro</h3>
-      
+        <img src={`${URL_FOTOS_MEMBROS}${dadosMembro?.arqFoto}`} />
+        <h4>{dadosMembro?.nome}</h4>
         <form onSubmit={handleSubmit}>
-          <input type="file" name='enviaFoto' ref={hiddenFileInput} onChange={handleFileChange} />
+          <input type="file" ref={hiddenFileInput} onChange={handleFileChange} />
 
           <button type='button' className='bt_selArqEnviaFotoMembro' onClick={handleClick}>
-            Selecione Arquivo
+            Selecionar outra foto
           </button>
 
           {!!file ?

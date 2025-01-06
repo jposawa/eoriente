@@ -5,11 +5,12 @@ import { useRecoilState } from "recoil"
 import { situacaoMembroAtom, usuarioLogadoAtom } from "../compartilhados/estados"
 import './ListaMembros.css'
 import { CameraOutlined, DeleteOutlined, FormOutlined } from "@ant-design/icons";
-import { URL_FOTOS_MEMBROS } from "../compartilhados/constantes";
+import { TIT_LISTA_MEMBROS, URL_FOTOS_MEMBROS } from "../compartilhados/constantes";
 import { Popconfirm } from "antd";
 import { useRecoilValue } from "recoil";
 import { Link } from "react-router-dom";
 import { EnviaFotoMembro, Modal } from "../componentes/";
+import { dataDoBanco } from "../compartilhados/funcoes";
 
 export const ListaMembros = () => {
   const usuarioLogado = useRecoilValue(usuarioLogadoAtom);
@@ -57,7 +58,8 @@ export const ListaMembros = () => {
 
   return (
     <>
-      <h3 className="tituloListaMembros">Lista de Membros</h3>
+      <h3 className="tituloListaMembros">Lista de Membros {TIT_LISTA_MEMBROS[filtro]}
+      </h3>
       <ul className="listaMembros">
         {
           listaMembros.filter((membro) => {
@@ -70,10 +72,10 @@ export const ListaMembros = () => {
                 </div>
                 <div className="conteudo">
                   <p>
-                    Cadastro:<b> {membro.cadastro}</b>
+                    <b>{membro.cadastro} - {membro.nome}</b>
                   </p>
                   <p>
-                    <b>{membro.nome}</b>
+                    Iniciação: {dataDoBanco(membro.dataIniciacao)}
                   </p>
                   <p>
                     {membro.logradouro}
@@ -82,7 +84,7 @@ export const ListaMembros = () => {
                     {membro.bairro} - {membro.cidade}
                   </p>
                   <p>
-                    {membro.telCelular} {membro.telResidencial}
+                    <b>{membro.telCelular} {membro.telResidencial}</b>
                   </p>
                   {usuarioLogado?.nivelAcesso > 3 ? (// é um return
                     <div className="btsAcoes">
@@ -100,7 +102,7 @@ export const ListaMembros = () => {
                         </button>
                       </Popconfirm>
                       <button type="button" onClick={() => {
-                        defineModalEnviaFotoMembroAberto(membro.cadastro)
+                        defineModalEnviaFotoMembroAberto({ cad: membro.cadastro, nome: membro.nome, arqFoto: membro.arquivoFoto })
                       }
                       }>
                         <CameraOutlined />
@@ -124,7 +126,7 @@ export const ListaMembros = () => {
         open={!!modalEnviaFotoMembroAberto}
         onClose={fechaModalEnviaFotoMembro}
       >
-        <EnviaFotoMembro carregaLista={buscarMembros} cadastro={modalEnviaFotoMembroAberto} onClose={fechaModalEnviaFotoMembro} />
+        <EnviaFotoMembro carregaLista={buscarMembros} dadosMembro={modalEnviaFotoMembroAberto} onClose={fechaModalEnviaFotoMembro} />
       </Modal>
     </>
   )

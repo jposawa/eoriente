@@ -1,18 +1,20 @@
+/* eslint-disable no-extra-boolean-cast */
 import React from "react";
-import { usuarioLogadoAtom } from "../compartilhados/estados"
 import './CadastraMembros.css'
-import { useRecoilValue } from "recoil";
 import { useNavigate, useParams } from "react-router-dom";
 import { Input } from "../componentes";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useUsuario } from "../compartilhados/hooks";
+import { MENSAGEM_ERRO } from "../compartilhados/constantes";
+import { formatarCep, formatarCPF, formatarTelefone } from "../compartilhados/funcoes";
 
 export const CadastraMembros = () => {
   const { id } = useParams();
   const [dadosMembro, defineDadosMembro] = React.useState();
   const [vinculoMaconico, defineVinculoMaconico] = React.useState('');
-  const usuarioLogado = useRecoilValue(usuarioLogadoAtom);
   const navigate = useNavigate();
+  const { existeSessao, redirecionaAcessoRestrito } = useUsuario();
 
   const [radioValueDoadorSangue, setRadioValueDoadorSangue] = React.useState('');
   const radioDoadorSangue = (ev) => {
@@ -38,6 +40,8 @@ export const CadastraMembros = () => {
     setRadioValueSituacao(ev.target.value);
   }
   React.useEffect(() => {
+    redirecionaAcessoRestrito();
+
     if (id) {
       axios.get(`https://datasystem-ce.com.br/eOriente/api_eo_membros.php?id=${id}`).then((resposta) => {
         defineDadosMembro(resposta.data);
@@ -46,14 +50,20 @@ export const CadastraMembros = () => {
         setRadioValueTipoSanguineo(resposta.data.tipoSanguineo);
         setRadioValueNivelAcesso(resposta.data.nivelAcesso);
         setRadioValueSituacao(resposta.data.situacao)
-      }).catch((erro) => {
+      }).catch(() => {
         toast.error("Erro na requisição, verifique sua conexão.")
       })
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const cadAltMembro = (dados) => {
     dados.preventDefault(); // para nao dar o refresh
+    if (!existeSessao) {
+      toast.error(MENSAGEM_ERRO);
+      return;
+    }
+
     const { target } = dados; // pegar os inputs
     const novosDados = {}; // para Inputs(name) com mesmo nome dos campos do BD
     Object.keys(target).forEach((indiceForm) => {
@@ -77,7 +87,7 @@ export const CadastraMembros = () => {
         //  console.log(resposta.data);
         navigate('/listamembros');
       }).catch((erro) => {
-        toast.warn(resposta.data);
+        toast.warn(erro?.data);
         //  console.log(resposta.data);
       })
     }
@@ -94,7 +104,7 @@ export const CadastraMembros = () => {
         //  console.log(resposta.data);
         navigate('/listamembros');
       }).catch((erro) => {
-        toast.warn(resposta.data);
+        toast.warn(erro.data);
         //  console.log(resposta.data);
       })
     }
@@ -107,16 +117,16 @@ export const CadastraMembros = () => {
         <div className="corpoCadMembro">
           <h4 className="subTituloCadMembro">Dados Pessoais</h4>
           <p>
-            <Input name="cadastro" type="tel" size="6" defaultValue={dadosMembro?.cadastro} label="Cadastro:" />
+            <Input name="cadastro" type="tel" size="6" defaultValue={dadosMembro?.cadastro} label="Cadastro:" required />
           </p>
           <p>
-            <Input name="nome" type="text" size="35" defaultValue={dadosMembro?.nome} label="Nome:" />
+            <Input name="nome" type="text" size="35" defaultValue={dadosMembro?.nome} label="Nome:" required />
           </p>
           <p>
             <Input name="conhecidoPor" type="text" size="20" defaultValue={dadosMembro?.conhecidoPor} label="Conhecido(a) por:" />
           </p>
           <p>
-            <Input name="dataIniciacao" type="date" defaultValue={dadosMembro?.dataIniciacao} label="Data da Iniciação:" />
+            <Input name="dataIniciacao" type="date" defaultValue={dadosMembro?.dataIniciacao} label="Data da Iniciação:" required />
           </p>
           <p>
             <Input name="lojaPatrocinadora" type="text" size="35" defaultValue={dadosMembro?.lojaPatrocinadora} label="Loja Patrocinadora:" />
@@ -180,16 +190,16 @@ export const CadastraMembros = () => {
             <Input name="orgaoEmissor" type="text" size="8" defaultValue={dadosMembro?.orgaoEmissor} label="Orgão Emissor:" />
           </p>
           <p>
-            <Input name="cpf" type="tel" size="16" defaultValue={dadosMembro?.cpf} label="CPF:" />
+            <Input name="cpf" type="tel" size="16" defaultValue={dadosMembro?.cpf} label="CPF:" onChange={formatarCPF} />
           </p>
           <p>
             <Input name="email" type="email" size="35" defaultValue={dadosMembro?.email} label="E-mail:" />
           </p>
           <p>
-            <Input name="telCelular" type="tel" size="16" defaultValue={dadosMembro?.telCelular} label="Celular:" />
+            <Input name="telCelular" type="tel" size="16" defaultValue={dadosMembro?.telCelular} label="Celular:" onChange={formatarTelefone} required />
           </p>
           <p>
-            <Input name="telComercial" type="tel" size="16" defaultValue={dadosMembro?.telComercial} label="Tel.Comercial:" />
+            <Input name="telComercial" type="tel" size="16" defaultValue={dadosMembro?.telComercial} label="Tel.Comercial:" onChange={formatarTelefone} />
           </p>
           <p>
             <Input name="nomePai" type="text" size="35" defaultValue={dadosMembro?.nomePai} label="Nome Pai:" />
@@ -205,7 +215,7 @@ export const CadastraMembros = () => {
             <Input name="bairro" type="text" size="25" defaultValue={dadosMembro?.bairro} label="Bairro:" />
           </p>
           <p>
-            <Input name="cep" type="tel" size="9" defaultValue={dadosMembro?.cep} label="CEP:" />
+            <Input name="cep" type="tel" size="9" defaultValue={dadosMembro?.cep} label="CEP:" onChange={formatarCep} />
           </p>
           <p>
             <Input name="cidade" type="text" size="25" defaultValue={dadosMembro?.cidade} label="Cidade:" />
@@ -214,7 +224,14 @@ export const CadastraMembros = () => {
             <Input name="complemento" type="text" size="35" defaultValue={dadosMembro?.complemento} label="Complemento:" />
           </p>
           <p>
-            <Input name="telResidencial" type="tel" size="16" defaultValue={dadosMembro?.telResidencial} label="Telefone:" />
+            <Input
+              name="telResidencial"
+              type="tel"
+              size="16"
+              defaultValue={dadosMembro?.telResidencial}
+              label="Telefone:"
+              onChange={formatarTelefone}
+            />
           </p>
           <h4 className="subTituloCadMembro">Dados Complementares</h4>
           <span>
@@ -250,13 +267,13 @@ export const CadastraMembros = () => {
               <Input name="bairroParentesco" type="text" size="25" defaultValue={dadosMembro?.bairroParentesco} label="Bairro:" />
             </p>
             <p>
-              <Input name="cepParentesco" type="tel" size="9" defaultValue={dadosMembro?.cepParentesco} label="CEP:" />
+              <Input name="cepParentesco" type="tel" size="9" defaultValue={dadosMembro?.cepParentesco} label="CEP:" onChange={formatarCep} />
             </p>
             <p>
               <Input name="cidadeParentesco" type="text" size="25" defaultValue={dadosMembro?.cidadeParentesco} label="Cidade:" />
             </p>
             <p>
-              <Input name="telParentesco" type="tel" size="16" defaultValue={dadosMembro?.telParentesco} label="Telefone:" />
+              <Input name="telParentesco" type="tel" size="16" defaultValue={dadosMembro?.telParentesco} label="Telefone:" onChange={formatarTelefone} />
             </p>
           </div>
           <h4 className="subTituloCadMembro">Outras informações</h4>

@@ -7,4 +7,14 @@ export const SITUACAO_MEMBROS = {
   FALECIDOS: "F"
 }
 
+export const TIT_LISTA_MEMBROS = {
+  A: "Ativos",
+  I: "Irregulares",
+  F: "Falecidos"
+}
+
 export const PREFIXO = "eo";
+
+export const MENSAGEM_ERRO = {
+  LOGIN: "Favor efetuar login novamente",
+};
