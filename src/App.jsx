@@ -16,7 +16,7 @@ function App() {
   const defineUsuarioLogado = useSetRecoilState(usuarioLogadoAtom);
   const navigate = useNavigate();
   React.useEffect(() => {
-    if (!usuarioLogado){
+    if (!usuarioLogado) {
       const usuarioSessao = JSON.parse(sessionStorage.getItem('eo-dadosUsuario'))
       if (!usuarioSessao) {
         navigate('/login');
@@ -29,6 +29,13 @@ function App() {
   const anoAtual = new Date().getFullYear();
   return (
     <main className='containerApp'>
+      <div className='message'>
+        <b>
+          <p>Este aplicativo funciona melhor em</p>
+          <p> modo retrato (na vertical).</p>
+          <p>Favor rotacionar seu aparelho.</p>
+        </b>
+      </div>
       <Cabecalho className='cabecalho' />
       <section className='paginaCentral'>
         <RotasUrl />

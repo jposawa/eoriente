@@ -5,7 +5,7 @@ import { useRecoilState } from "recoil"
 import { situacaoMembroAtom, usuarioLogadoAtom } from "../compartilhados/estados"
 import './ListaMembros.css'
 import { CameraOutlined, DeleteOutlined, FormOutlined } from "@ant-design/icons";
-import { URL_FOTOS_MEMBROS } from "../compartilhados/constantes";
+import { TIT_LISTA_MEMBROS, URL_FOTOS_MEMBROS } from "../compartilhados/constantes";
 import { Popconfirm } from "antd";
 import { useRecoilValue } from "recoil";
 import { Link } from "react-router-dom";
@@ -58,7 +58,8 @@ export const ListaMembros = () => {
 
   return (
     <>
-      <h3 className="tituloListaMembros">Lista de Membros</h3>
+      <h3 className="tituloListaMembros">Lista de Membros {TIT_LISTA_MEMBROS[filtro]}
+      </h3>
       <ul className="listaMembros">
         {
           listaMembros.filter((membro) => {
