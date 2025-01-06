@@ -1,8 +1,4 @@
 import React from 'react'
-import reactLogo from './assets/react.svg'
-import appLogo from '/eoriente.png'
-import PWABadge from './PWABadge.jsx'
-import axios from 'axios'
 import './App.css'
 import { useRecoilValue } from 'recoil'
 import { usuarioLogadoAtom } from './compartilhados/estados/index.jsx'
@@ -12,6 +8,7 @@ import { useNavigate } from 'react-router-dom'
 import { useSetRecoilState } from 'recoil'
 
 function App() {
+  const ambienteEnv = process.env.REACT_APP_AMBIENTE;
   const usuarioLogado = useRecoilValue(usuarioLogadoAtom);
   const defineUsuarioLogado = useSetRecoilState(usuarioLogadoAtom);
   const navigate = useNavigate();
@@ -26,6 +23,10 @@ function App() {
       }
     }
   }, [usuarioLogado]);
+
+  React.useEffect(() => {
+    console.log("Valor do ambiente:", ambienteEnv);
+  }, [ambienteEnv]);
   const anoAtual = new Date().getFullYear();
   return (
     <main className='containerApp'>
