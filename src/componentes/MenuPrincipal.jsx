@@ -80,14 +80,16 @@ export const MenuPrincipal = () => {
           </>
         )
           : null}
-        <li>
+ {/*}       <li>
           <AuditOutlined />
           <p>Minhas Mensalidades</p>
-        </li>
-        <li>
-          <DollarOutlined />
-          <p>Transparência Financeira</p>
-        </li>
+        </li> 
+        <li>      
+          <Link to='transparenciafinanceira'>
+            <DollarOutlined />
+            <p>Transparência Financeira</p>
+          </Link>
+        </li> */}
         <li onClick={alternaModalAlteraSenhaAberto}>
           <EditOutlined />
           <p>Altera Senha</p>
