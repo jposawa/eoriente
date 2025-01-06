@@ -3,6 +3,7 @@ import { Login } from "./Login.jsx";
 import { ListaMembros } from "./ListaMembros.jsx";
 import { AlteraSenha } from "./AlteraSenha.jsx";
 import { CadastraMembros } from "./CadastraMembros.jsx";
+import { TransparenciaFinanceira } from "./TransparenciaFinanceira.jsx";
 export const RotasUrl = () => {
   return(
     <Routes>
@@ -20,6 +21,9 @@ export const RotasUrl = () => {
       } />
       <Route path="cadastramembros" element = {
         <CadastraMembros/>
+      } />
+      <Route path="transparenciafinanceira" element = {
+        <TransparenciaFinanceira/>
       } />
       <Route path="/" exact element = {
         <ListaMembros/>

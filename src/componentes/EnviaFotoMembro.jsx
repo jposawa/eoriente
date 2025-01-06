@@ -84,7 +84,7 @@ export const EnviaFotoMembro = (props) => {
     <>
       <div className='containerFormEnviaFotoMembro'>
         <h3 className='tituloEnviaFotoMembro'>Enviando Foto Membro</h3>
-        <img src={`${URL_FOTOS_MEMBROS}${dadosMembro?.arqFoto}`} />
+        <img className='fotoAtual' src={`${URL_FOTOS_MEMBROS}${dadosMembro?.arqFoto}`} />
         <h4>{dadosMembro?.nome}</h4>
         <form onSubmit={handleSubmit}>
           <input type="file" ref={hiddenFileInput} onChange={handleFileChange} />

@@ -43,6 +43,10 @@ export const ListaMembros = () => {
     })
   }
 
+  const buscaImagemVazia = (event) => {
+    event.target.src = `${URL_FOTOS_MEMBROS}f000.jpg`;
+  }
+
   const [modalEnviaFotoMembroAberto, defineModalEnviaFotoMembroAberto] = React.useState(null);
   const alternaModalEnviaFotoMembroAberto = () => {
     defineModalEnviaFotoMembroAberto(!modalEnviaFotoMembroAberto);
@@ -68,7 +72,7 @@ export const ListaMembros = () => {
             return (
               <li key={membro.id}>
                 <div className="fotoMembro">
-                  <img src={`${URL_FOTOS_MEMBROS}${membro.arquivoFoto}`} />
+                  <img src={`${URL_FOTOS_MEMBROS}${membro.arquivoFoto}`} onError={buscaImagemVazia} />
                 </div>
                 <div className="conteudo">
                   <p>
