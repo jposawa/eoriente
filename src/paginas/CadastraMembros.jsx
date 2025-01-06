@@ -7,7 +7,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { useUsuario } from "../compartilhados/hooks";
 import { MENSAGEM_ERRO } from "../compartilhados/constantes";
-import { formatarCPF, formatarTelefone } from "../compartilhados/funcoes";
+import { formatarCep, formatarCPF, formatarTelefone } from "../compartilhados/funcoes";
 
 export const CadastraMembros = () => {
   const { id } = useParams();
@@ -196,10 +196,10 @@ export const CadastraMembros = () => {
             <Input name="email" type="email" size="35" defaultValue={dadosMembro?.email} label="E-mail:" />
           </p>
           <p>
-            <Input name="telCelular" type="tel" size="16" defaultValue={dadosMembro?.telCelular} label="Celular:" required />
+            <Input name="telCelular" type="tel" size="16" defaultValue={dadosMembro?.telCelular} label="Celular:" onChange={formatarTelefone} required />
           </p>
           <p>
-            <Input name="telComercial" type="tel" size="16" defaultValue={dadosMembro?.telComercial} label="Tel.Comercial:" />
+            <Input name="telComercial" type="tel" size="16" defaultValue={dadosMembro?.telComercial} label="Tel.Comercial:" onChange={formatarTelefone} />
           </p>
           <p>
             <Input name="nomePai" type="text" size="35" defaultValue={dadosMembro?.nomePai} label="Nome Pai:" />
@@ -215,7 +215,7 @@ export const CadastraMembros = () => {
             <Input name="bairro" type="text" size="25" defaultValue={dadosMembro?.bairro} label="Bairro:" />
           </p>
           <p>
-            <Input name="cep" type="tel" size="9" defaultValue={dadosMembro?.cep} label="CEP:" />
+            <Input name="cep" type="tel" size="9" defaultValue={dadosMembro?.cep} label="CEP:" onChange={formatarCep} />
           </p>
           <p>
             <Input name="cidade" type="text" size="25" defaultValue={dadosMembro?.cidade} label="Cidade:" />
@@ -267,13 +267,13 @@ export const CadastraMembros = () => {
               <Input name="bairroParentesco" type="text" size="25" defaultValue={dadosMembro?.bairroParentesco} label="Bairro:" />
             </p>
             <p>
-              <Input name="cepParentesco" type="tel" size="9" defaultValue={dadosMembro?.cepParentesco} label="CEP:" />
+              <Input name="cepParentesco" type="tel" size="9" defaultValue={dadosMembro?.cepParentesco} label="CEP:" onChange={formatarCep} />
             </p>
             <p>
               <Input name="cidadeParentesco" type="text" size="25" defaultValue={dadosMembro?.cidadeParentesco} label="Cidade:" />
             </p>
             <p>
-              <Input name="telParentesco" type="tel" size="16" defaultValue={dadosMembro?.telParentesco} label="Telefone:" />
+              <Input name="telParentesco" type="tel" size="16" defaultValue={dadosMembro?.telParentesco} label="Telefone:" onChange={formatarTelefone} />
             </p>
           </div>
           <h4 className="subTituloCadMembro">Outras informações</h4>

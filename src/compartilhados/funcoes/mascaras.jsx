@@ -38,3 +38,8 @@ export const formatarCep = (event) => {
   valor = valor.replace(/^(\d{5})(\d)/g, "$1-$2");
   elemento.value = valor;
 }
+
+export const dataDoBanco = (data) => {
+  let dataBr = data.split('-').reverse().join('/');
+  return dataBr;
+}

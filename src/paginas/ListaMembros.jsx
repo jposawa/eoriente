@@ -10,6 +10,7 @@ import { Popconfirm } from "antd";
 import { useRecoilValue } from "recoil";
 import { Link } from "react-router-dom";
 import { EnviaFotoMembro, Modal } from "../componentes/";
+import { dataDoBanco } from "../compartilhados/funcoes";
 
 export const ListaMembros = () => {
   const usuarioLogado = useRecoilValue(usuarioLogadoAtom);
@@ -70,10 +71,10 @@ export const ListaMembros = () => {
                 </div>
                 <div className="conteudo">
                   <p>
-                    Cadastro:<b> {membro.cadastro}</b>
+                    <b>{membro.cadastro} - {membro.nome}</b>
                   </p>
                   <p>
-                    <b>{membro.nome}</b>
+                    Iniciação: {dataDoBanco(membro.dataIniciacao)}
                   </p>
                   <p>
                     {membro.logradouro}
@@ -82,7 +83,7 @@ export const ListaMembros = () => {
                     {membro.bairro} - {membro.cidade}
                   </p>
                   <p>
-                    {membro.telCelular} {membro.telResidencial}
+                    <b>{membro.telCelular} {membro.telResidencial}</b>
                   </p>
                   {usuarioLogado?.nivelAcesso > 3 ? (// é um return
                     <div className="btsAcoes">
@@ -100,7 +101,7 @@ export const ListaMembros = () => {
                         </button>
                       </Popconfirm>
                       <button type="button" onClick={() => {
-                        defineModalEnviaFotoMembroAberto({cad:membro.cadastro, nome:membro.nome, arqFoto:membro.arquivoFoto})
+                        defineModalEnviaFotoMembroAberto({ cad: membro.cadastro, nome: membro.nome, arqFoto: membro.arquivoFoto })
                       }
                       }>
                         <CameraOutlined />
