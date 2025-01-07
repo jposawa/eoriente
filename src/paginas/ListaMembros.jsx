@@ -1,11 +1,10 @@
 import React from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
-import { useRecoilState } from "recoil"
 import { situacaoMembroAtom, usuarioLogadoAtom } from "../compartilhados/estados"
 import './ListaMembros.css'
 import { CameraOutlined, DeleteOutlined, FormOutlined } from "@ant-design/icons";
-import { TIT_LISTA_MEMBROS, URL_FOTOS_MEMBROS } from "../compartilhados/constantes";
+import { AMBIENTE, TIT_LISTA_MEMBROS, URL_FOTOS_MEMBROS } from "../compartilhados/constantes";
 import { Popconfirm } from "antd";
 import { useRecoilValue } from "recoil";
 import { Link } from "react-router-dom";
@@ -20,24 +19,28 @@ export const ListaMembros = () => {
   const filtro = useRecoilValue(situacaoMembroAtom);
 
   const confirmarExclusao = (id) => {
-    axios.delete(`https://datasystem-ce.com.br/eOriente/api_eo_membros.php/${id}`).then((resposta) => {
+    axios.delete(`https://datasystem-ce.com.br/eOriente/api_eo_membros.php/${id}`).then(() => {
       //console.log(resposta.data);
       toast.warn('Exclusão realizada com sucesso !');
       buscarMembros();
     }).catch((erro) => {
       toast.error("Erro na exclusão, verifique sua conexão.")
-      //console.error('Erro no acesso:', erro);
+      console.error('Erro no acesso:', erro);
     })
   }
   const buscarMembros = () => {
     defineCarregando(true);
-    axios.get('https://datasystem-ce.com.br/eOriente/api_eo_membros.php').then((resposta) => {
+    axios.get('https://datasystem-ce.com.br/eOriente/api_eo_membros.php', {
+      params: {
+        ambiente: AMBIENTE,
+      }
+    }).then((resposta) => {
       /*dadosMembros(resposta.data);*/
       //console.log(resposta.data);
       defineListaMembros(resposta.data);
     }).catch((erro) => {
       toast.error("Erro na requisição, verifique sua conexão.")
-      //console.error('Erro no acesso:', erro);
+      console.error('Erro no acesso:', erro);
     }).finally(() => {
       defineCarregando(false);
     })
@@ -48,9 +51,6 @@ export const ListaMembros = () => {
   }
 
   const [modalEnviaFotoMembroAberto, defineModalEnviaFotoMembroAberto] = React.useState(null);
-  const alternaModalEnviaFotoMembroAberto = () => {
-    defineModalEnviaFotoMembroAberto(!modalEnviaFotoMembroAberto);
-  }
   const fechaModalEnviaFotoMembro = () => {
     defineModalEnviaFotoMembroAberto(false);
   }
@@ -58,6 +58,7 @@ export const ListaMembros = () => {
     if (!carregando && listaMembros.length === 0) {
       buscarMembros();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
