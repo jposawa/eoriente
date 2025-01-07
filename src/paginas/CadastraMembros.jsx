@@ -6,7 +6,7 @@ import { Input } from "../componentes";
 import axios from "axios";
 import { toast } from "react-toastify";
 import { useUsuario } from "../compartilhados/hooks";
-import { MENSAGEM_ERRO } from "../compartilhados/constantes";
+import { AMBIENTE, MENSAGEM_ERRO } from "../compartilhados/constantes";
 import { formatarCep, formatarCPF, formatarTelefone } from "../compartilhados/funcoes";
 
 export const CadastraMembros = () => {
@@ -43,7 +43,7 @@ export const CadastraMembros = () => {
     redirecionaAcessoRestrito();
 
     if (id) {
-      axios.get(`https://datasystem-ce.com.br/eOriente/api_eo_membros.php?id=${id}`).then((resposta) => {
+      axios.get(`https://datasystem-ce.com.br/eOriente/api_eo_membros.php?id=${id}&ambiente=${AMBIENTE}`).then((resposta) => {
         defineDadosMembro(resposta.data);
         defineVinculoMaconico(resposta.data.parentescoMaconico);
         setRadioValueDoadorSangue(resposta.data.doadorSangue);
@@ -98,7 +98,8 @@ export const CadastraMembros = () => {
         tipoSanguineo: radioValueTipoSanguineo,
         parentescoMaconico: vinculoMaconico,
         nivelAcesso: radioValueNivelAcesso,
-        situacao: radioValueSituacao
+        situacao: radioValueSituacao,
+        ambiente: AMBIENTE,
       }).then((resposta) => {
         toast.success(resposta.data);
         //  console.log(resposta.data);
