@@ -6,9 +6,9 @@ import { RotasUrl } from './paginas/RotasUrl.jsx'
 import { Cabecalho, MenuPrincipal } from './componentes/'
 import { useNavigate } from 'react-router-dom'
 import { useSetRecoilState } from 'recoil'
+import { AMBIENTE } from './compartilhados/constantes/index.jsx'
 
 function App() {
-  const ambienteEnv = process.env.REACT_APP_AMBIENTE;
   const usuarioLogado = useRecoilValue(usuarioLogadoAtom);
   const defineUsuarioLogado = useSetRecoilState(usuarioLogadoAtom);
   const navigate = useNavigate();
@@ -25,8 +25,8 @@ function App() {
   }, [usuarioLogado]);
 
   React.useEffect(() => {
-    console.log("Valor do ambiente:", ambienteEnv);
-  }, [ambienteEnv]);
+    console.log("Valor do ambiente:", AMBIENTE);
+  }, [AMBIENTE]);
   const anoAtual = new Date().getFullYear();
   return (
     <main className='containerApp'>

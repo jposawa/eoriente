@@ -18,3 +18,5 @@ export const PREFIXO = "eo";
 export const MENSAGEM_ERRO = {
   LOGIN: "Favor efetuar login novamente",
 };
+
+export const AMBIENTE = process.env.REACT_APP_AMBIENTE ?? "test";
