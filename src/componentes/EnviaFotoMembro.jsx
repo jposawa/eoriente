@@ -3,7 +3,7 @@ import './EnviaFotoMembro.css'
 import { toast } from 'react-toastify';
 import Cropper from 'react-easy-crop';
 import { getCroppedImg } from '../compartilhados/funcoes';
-import { URL_FOTOS_MEMBROS } from '../compartilhados/constantes';
+import { AMBIENTE, URL_FOTOS_MEMBROS } from '../compartilhados/constantes';
 //import Slider from "@material-ui/core/Slider";
 //import Cropper from 'react-cropper';
 //import './styles.css'
@@ -58,6 +58,7 @@ export const EnviaFotoMembro = (props) => {
     const formData = new FormData();
     formData.append('image', novoFile);
     formData.append('cadastro', dadosMembro?.cad);
+    formData.append('ambiente', AMBIENTE);
 
     try {
       const response = await fetch('https://datasystem-ce.com.br/eOriente/api_eo_enviaFotoServidor.php', {
