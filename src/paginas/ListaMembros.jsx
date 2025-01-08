@@ -4,7 +4,7 @@ import { toast } from "react-toastify";
 import { situacaoMembroAtom, usuarioLogadoAtom } from "../compartilhados/estados"
 import './ListaMembros.css'
 import { CameraOutlined, DeleteOutlined, FormOutlined } from "@ant-design/icons";
-import { AMBIENTE, TIT_LISTA_MEMBROS, URL_FOTOS_MEMBROS } from "../compartilhados/constantes";
+import { AMBIENTE, TIT_LISTA_MEMBROS, URL_FOTOS_MEMBROS, URL_MEMBROS } from "../compartilhados/constantes";
 import { Popconfirm } from "antd";
 import { useRecoilValue } from "recoil";
 import { Link } from "react-router-dom";
@@ -19,7 +19,8 @@ export const ListaMembros = () => {
   const filtro = useRecoilValue(situacaoMembroAtom);
 
   const confirmarExclusao = (id) => {
-    axios.delete(`https://datasystem-ce.com.br/eOriente/api_eo_membros.php/${id}`).then(() => {
+    axios.delete(URL_MEMBROS.concat("/",id)
+    ).then(() => {
       //console.log(resposta.data);
       toast.warn('Exclusão realizada com sucesso !');
       buscarMembros();
@@ -30,7 +31,7 @@ export const ListaMembros = () => {
   }
   const buscarMembros = () => {
     defineCarregando(true);
-    axios.get('https://datasystem-ce.com.br/eOriente/api_eo_membros.php', {
+    axios.get(URL_MEMBROS, {
       params: {
         ambiente: AMBIENTE,
       }

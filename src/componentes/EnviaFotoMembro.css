@@ -49,6 +49,8 @@
 }
 
 .fotoAtual {
-  max-width: 12rem;
-  max-height: 12rem;
+  max-width: 6.5rem;
+  max-height: 6.5rem;
+  border-radius: 50%;
+  border: 2px solid #fff;
 }

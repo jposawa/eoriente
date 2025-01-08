@@ -80,7 +80,7 @@ export const MenuPrincipal = () => {
           </>
         )
           : null}
- {/*}       <li>
+        <li>
           <AuditOutlined />
           <p>Minhas Mensalidades</p>
         </li> 
@@ -89,7 +89,7 @@ export const MenuPrincipal = () => {
             <DollarOutlined />
             <p>Transparência Financeira</p>
           </Link>
-        </li> */}
+        </li>
         <li onClick={alternaModalAlteraSenhaAberto}>
           <EditOutlined />
           <p>Altera Senha</p>
