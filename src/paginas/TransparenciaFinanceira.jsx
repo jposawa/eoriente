@@ -19,51 +19,13 @@ export const TransparenciaFinanceira = () => {
     console.log(`selected ${value}`);
   };
 
-  const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  // Isso também funciona exportando na pasta /constantes
+  const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
 
-  const mesAnoAtual = 'Jan/2025';
-  //let opcs = new Object;
-  let options = new Object;
-  let mesAno = new Array;
-  let anos = 2025;
-  let m = 0;
-  for (let i = 0; i<=17; i++){
-    mesAno.push(meses[m])
-     
-    console.log((m+1)+"/"+anos+" - "+mesAno[m]+"/"+anos);
- 
-    options = [{
-      value: (m+1)+"/"+anos,
-      label: mesAno[m]+"/"+anos
-    }]
-  
-    m = m + 1;
-    if (m>11) {
-      anos++;
-      m = 0;
-    }
-  }
-  
-/*
-  const options = [
-    {
-      value: '01/2025',
-      label: 'Jan/2025',
-    },
-    {
-      value: '02/2025',
-      label: 'Fev/2025',
-    },
-    {
-      value: '03/2025',
-      label: 'Mar/2025',
-    },
-    {
-      value: '11/2025',
-      label: 'Nov/2025',
-    },
-  ]
-*/
+  const formatoDataMesAno = "MM/YYYY";
+
+  const dataAtual = dayjs();
+
   return (
     <>
       <h3 className="titTranspFinanc">Transparência Financeira</h3>
@@ -87,15 +49,13 @@ export const TransparenciaFinanceira = () => {
             />
           </p>
           <p>Mês/Ano:
-            {/*    <DatePicker
-          defaultValue={dayjs('2025/01',"MM/YYYY")} format="MM/YYYY"
-          onChange={onChangeMA} 
-          picker="month" /> */}
-            <Select
-              placeholder="Selecione um mês"
-              defaultValue={mesAnoAtual}
-              onChange={onChange}
-              options={options}
+            <DatePicker
+              defaultValue={dataAtual}
+              format={formatoDataMesAno}
+              onChange={onChangeMA}
+              picker="month"
+              maxDate={dataAtual}
+              minDate={dataAtual.subtract(18, "months")}
             />
           </p>
         </div>
