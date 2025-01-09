@@ -23,19 +23,23 @@ export const TransparenciaFinanceira = () => {
 
   const mesAnoAtual = 'Jan/2025';
   let options = new Object;
-  let anos = 2025;
+  let  anos = new Date();
+  let mesAtual = anos.getMonth();
+  anos = anos.getFullYear(); // ano atual
   let opcs = new Array;
-  let m = 0;
   for (let i = 0; i<=17; i++){
+    console.log((mesAtual)+'/'+anos);
     options = {
-      value: (m+1)+"/"+anos,
-      label: meses[m]+"/"+anos
+      value: (mesAtual)+"/"+anos,
+      label: meses[mesAtual]+"/"+anos
     }
     opcs[i] = options;
-    m = m + 1;
-    if (m>11) {
+    if (mesAtual==0) {
+      mesAtual = 12;
       anos--;
-      m = 0;
+      mesAtual--;
+    } else {
+      mesAtual--;
     }
   }
  
