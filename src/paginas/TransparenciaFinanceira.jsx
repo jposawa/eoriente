@@ -19,16 +19,16 @@ export const TransparenciaFinanceira = () => {
     console.log(`selected ${value}`);
   };
 
+  // Preparando para o Select mes/ano 
   const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
-
-  const mesAnoAtual = 'Jan/2025';
   let options = new Object;
   let  anos = new Date();
   let mesAtual = anos.getMonth();
   anos = anos.getFullYear(); // ano atual
+  const mesAnoAtual = meses[mesAtual]+'/'+anos;
   let opcs = new Array;
   for (let i = 0; i<=17; i++){
-    console.log((mesAtual)+'/'+anos);
+  //  console.log((mesAtual)+'/'+anos);
     options = {
       value: (mesAtual)+"/"+anos,
       label: meses[mesAtual]+"/"+anos
@@ -42,7 +42,8 @@ export const TransparenciaFinanceira = () => {
       mesAtual--;
     }
   }
- 
+  ///  final select mes/ano
+
   return (
     <>
       <h3 className="titTranspFinanc">Transparência Financeira</h3>
