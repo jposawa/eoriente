@@ -6,35 +6,39 @@ import { useRecoilState } from "recoil"
 import { usuarioLogadoAtom } from "../compartilhados/estados"
 import { Link } from "react-router-dom";
 import { Select } from "antd";
-import { DatePicker } from "antd";
-import dayjs from "dayjs";
+import { AMBIENTE, URL_CAIXA } from "../compartilhados/constantes";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 export const TransparenciaFinanceira = () => {
   const [usuarioLogado, defineUsuarioLogado] = useRecoilState(usuarioLogadoAtom);
-
-  const onChange = (value) => {
-    console.log(`selected ${value}`);
-  };
-  const onChangeMA = (value) => {
-    console.log(`selected ${value}`);
-  };
+  const [carregando, setCarregando] = React.useState(false);
+  const [listaCaixa, setListaCaixa] = React.useState([]);
+  const credito = 0;
+  const debito = 0;
 
   // Preparando para o Select mes/ano 
-  const meses = ['Jan','Fev','Mar','Abr','Mai','Jun','Jul','Ago','Set','Out','Nov','Dez'];
+  const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
   let options = new Object;
-  let  anos = new Date();
-  let mesAtual = anos.getMonth();
-  anos = anos.getFullYear(); // ano atual
-  const mesAnoAtual = meses[mesAtual]+'/'+anos;
+  let anos = new Date();
+  let mesAtual = 8; //anos.getMonth(); //array jan=0
+  anos = 2020; //anos.getFullYear(); // ano atual
+  let contaSel = '1';
+  let mesAnoSel = (mesAtual + 1) + "/" + anos;
+  if (sessionStorage.getItem('eo-contaSel')) {
+    contaSel = sessionStorage.getItem('eo-contaSel');
+  }
+  if (sessionStorage.getItem('eo-mesAnoSel')) {
+    mesAnoSel = sessionStorage.getItem('eo-mesAnoSel');
+  }
   let opcs = new Array;
-  for (let i = 0; i<=17; i++){
-  //  console.log((mesAtual)+'/'+anos);
+  for (let i = 0; i <= 17; i++) {
     options = {
-      value: (mesAtual)+"/"+anos,
-      label: meses[mesAtual]+"/"+anos
+      value: (mesAtual + 1) + "/" + anos,
+      label: meses[mesAtual] + "/" + anos
     }
     opcs[i] = options;
-    if (mesAtual==0) {
+    if (mesAtual == 0) {
       mesAtual = 12;
       anos--;
       mesAtual--;
@@ -42,75 +46,152 @@ export const TransparenciaFinanceira = () => {
       mesAtual--;
     }
   }
+
+  const opcCaixa = (value) => {
+    contaSel = value;
+    sessionStorage.setItem('eo-contaSel', contaSel);
+    if (sessionStorage.getItem('eo-mesAnoSel')) {
+      mesAnoSel = sessionStorage.getItem('eo-mesAnoSel');
+    }
+
+    buscarDadosCaixa(contaSel, mesAnoSel);
+  }
+
+  const opcMesAno = (value) => {
+    const valor = value.padStart(7, '0');
+    const mesSel = parseInt(valor.substr(0, 2));
+    const anoSel = valor.substr(3, 4);
+    mesAnoSel = `${mesSel + '/' + anoSel}`;
+    sessionStorage.setItem('eo-mesAnoSel', mesAnoSel);
+    if (sessionStorage.getItem('eo-contaSel')) {
+      contaSel = sessionStorage.getItem('eo-contaSel');
+    }
+
+    buscarDadosCaixa(contaSel, mesAnoSel);
+  };
   ///  final select mes/ano
+
+  const buscarDadosCaixa = (contaSel, mesAnoSel) => {
+    setCarregando(true);
+    axios.get(URL_CAIXA, {
+      params: {
+        conta: contaSel,
+        mesAno: mesAnoSel.toString().padStart(7, '0'),
+        ambiente: AMBIENTE
+      }
+    }).then((resposta) => {
+      setCarregando(false);
+      setListaCaixa(resposta.data);
+    }).catch((erro) => {
+      toast.error('Nenhum movimento encontrado !');
+      setCarregando(false);
+    }).finally(() => {
+      setCarregando(false);
+    })
+  }
+
+  React.useEffect(() => {
+    if (!carregando && listaCaixa.length === 0) {
+      buscarDadosCaixa(contaSel, mesAnoSel);
+    }
+  }, []);
 
   return (
     <>
-      <h3 className="titTranspFinanc">Transparência Financeira</h3>
-      <div className="corpoTranspFinanc">
-        <div className="escolhaMes">
-          <p>Conta:
-            <Select
-              placeholder="Selec."
-              defaultValue="Caixa"
-              onChange={onChange}
-              options={[
-                {
-                  value: '1',
-                  label: 'Caixa ',
-                },
-                {
-                  value: '2',
-                  label: 'Tronco',
-                },
-              ]}
-            />
-          </p>
-          <p>Mês/Ano:
-            {/*    <DatePicker
-          defaultValue={dayjs('2025/01',"MM/YYYY")} format="MM/YYYY"
-          onChange={onChangeMA} 
-          picker="month" /> */}
-            <Select
-              placeholder="Selecione um mês"
-              defaultValue={mesAnoAtual}
-              onChange={onChange}
-              options={opcs}
-            />
-          </p>
-        </div>
-        <div className="cabecalhoCaixa">
-          <p>
-            <Popconfirm
-              title="Excluir Lançamento"
-              description="Confirma exclusão ?"
-              onConfirm={() => {
-                excluirLancCaixa()
-              }}
-              okText="Sim"
-              cancelText="Não"
-            >
-              <button type="button">
-                <DeleteOutlined />
-              </button>
-            </Popconfirm>
-          </p>
-          <p>Dia</p>
-          <p>Descrição Lançamento</p>
-          <p>Débito</p>
-          <p>Crédito</p>
-        </div>
+
+      <div className="titTranspFinanc"><h3>Transparência Financeira</h3>
+      </div>
+      <div className="escolhaMes">
+        <p>Conta:
+          <Select
+            placeholder="Selec."
+            defaultValue={contaSel}
+            onChange={opcCaixa}
+            options={[
+              {
+                value: '1',
+                label: 'Caixa ',
+              },
+              {
+                value: '2',
+                label: 'Tronco',
+              },
+            ]}
+          />
+        </p>
+        <p>Mês/Ano:
+          <Select
+            placeholder="Selecione um mês"
+            defaultValue={mesAnoSel}
+            onChange={opcMesAno}
+            options={opcs}
+          />
+        </p>
+      </div>
+      <div className="cabecalhoCaixa">
+        {/*  <p>
+          <Popconfirm
+            title="Excluir Lançamento"
+            description="Confirma exclusão ?"
+            onConfirm={() => {
+              excluirLancCaixa()
+            }}
+            okText="Sim"
+            cancelText="Não"
+          >
+            <button type="button">
+              <DeleteOutlined />
+            </button>
+          </Popconfirm>
+        </p> */}
+        <p>Dia</p>
+        <p>Descrição Lançamento</p>
+        <p>Débito</p>
+        <p>Crédito</p>
+      </div>
+      <ul className="containerDados">
+        {
+          listaCaixa.map((caixa) => {
+            return (
+              <li key={caixa.id}>
+                <div className="dadosCaixa">
+                  <p>{caixa.dataMovimento.substr(8, 2)}</p>
+                  <p>
+                    {caixa.historicoPadrao}
+                    {caixa?.idHistorico == 1 ?
+                      (` de ${caixa.nomeMembro} ref. mês ${caixa.mesAno}`) : ` ${caixa.complemento}`}
+                  </p>
+                  <p>
+                    {caixa?.statusLancamento == "D" ? (
+                      `${caixa.valor}`
+                    ) : `-------`}
+                  </p>
+                  <p>
+                    {caixa?.statusLancamento == "C" ? (
+                      `${caixa.valor}`
+                    ) : `-------`}
+                  </p>
+                </div>
+              </li>
+            )
+          })
+        }
+      </ul>
+      <div className="somasLancamentosMes">
+        <p>Somas dos Mês:</p>
+        <p>{debito}</p>
+        <p>{credito}</p>
       </div>
       <div className="totaisInformados">
         <div>
           <p>Saldo Anterior:</p>
-          <p>Soma do Mês:</p>
-          <p>Saldo Atual:</p>
+          <p>Saldo do Mês:</p>
+          <p><b>Saldo Atual:</b></p>
         </div>
         <div>
           <p>1.200,00</p>
           <p>500,00</p>
-          <p>1.700,00</p>
+          <p><b>1.700,00</b></p>
         </div>
       </div>
       <nav className="menuTranspFinanc">

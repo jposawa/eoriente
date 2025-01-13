@@ -17,7 +17,11 @@ export const ListaMembros = () => {
   const [carregando, defineCarregando] = React.useState(false);
   const [listaMembros, defineListaMembros] = React.useState([]);
   const filtro = useRecoilValue(situacaoMembroAtom);
-
+  /// para o transparencia financeira
+  sessionStorage.removeItem('eo-caixaSel');
+  sessionStorage.removeItem('eo-mesAnoSel');
+  ///
+  
   const confirmarExclusao = (id) => {
     axios.delete(URL_MEMBROS.concat("/",id)
     ).then(() => {
