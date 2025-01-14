@@ -14,8 +14,8 @@ export const TransparenciaFinanceira = () => {
   const [usuarioLogado, defineUsuarioLogado] = useRecoilState(usuarioLogadoAtom);
   const [carregando, setCarregando] = React.useState(false);
   const [listaCaixa, setListaCaixa] = React.useState([]);
-  const credito = 0;
-  const debito = 0;
+  const [buscaSomasCaixa, setBuscaSomasCaixa] = React.useState([]);
+  const saldoAnterior = 0;
 
   // Preparando para o Select mes/ano 
   const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
@@ -81,9 +81,11 @@ export const TransparenciaFinanceira = () => {
       }
     }).then((resposta) => {
       setCarregando(false);
+      setBuscaSomasCaixa(resposta.data);
       setListaCaixa(resposta.data);
     }).catch((erro) => {
-      toast.error('Nenhum movimento encontrado !');
+      // toast.error('Nenhum movimento encontrado !');
+      setListaCaixa([{ "id": "", "conta": "", "dataMovimento": "", "valor": "", "complemento": "", "mesAno": "", "idHistorico": "", "historicoPadrao": "NENHUM MOVIMENTO ENCONTRADO !", "statusLancamento": "", "nomeMembro": " " }]);
       setCarregando(false);
     }).finally(() => {
       setCarregando(false);
@@ -177,23 +179,34 @@ export const TransparenciaFinanceira = () => {
           })
         }
       </ul>
-      <div className="somasLancamentosMes">
-        <p>Somas dos Mês:</p>
-        <p>{debito}</p>
-        <p>{credito}</p>
+      <div className="containerSubTotais">
+        {
+          buscaSomasCaixa.slice(-1).map((somas) => {
+            return (
+              <div key={somas.id}>
+                <div className="somasLancamentosMes">
+                  <p>Somas do Mês:</p>
+                  <p>{somas.somaDebito.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>{/* somaDebito */}
+                  <p>{somas.somaCredito.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>{/* somaCredito */}
+                </div>
+                <div className="totaisInformados">
+                  <div>
+                    <p>Saldo Anterior:</p>
+                    <p><b>Saldo do Mês:</b></p>
+                    <p>Saldo Atual:</p>
+                  </div>
+                  <div>
+                    <p>{saldoAnterior.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>{/*saldoAnterior - nao esta vindo ainda */}
+                    <p><b>{(somas.somaCredito - somas.somaDebito).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</b></p> {/* saldoMes */}
+                    <p>{((saldoAnterior) + (somas.somaCredito - somas.somaDebito)).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>{/*saldoAnterior + saldoMes */}
+                  </div>
+                </div>
+              </div>
+            )
+          }
+          )}
       </div>
-      <div className="totaisInformados">
-        <div>
-          <p>Saldo Anterior:</p>
-          <p>Saldo do Mês:</p>
-          <p><b>Saldo Atual:</b></p>
-        </div>
-        <div>
-          <p>1.200,00</p>
-          <p>500,00</p>
-          <p><b>1.700,00</b></p>
-        </div>
-      </div>
+
       <nav className="menuTranspFinanc">
         {usuarioLogado?.nivelAcesso > 3 ? (
           <li>
