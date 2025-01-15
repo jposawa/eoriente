@@ -86,6 +86,7 @@ export const TransparenciaFinanceira = () => {
     }).catch((erro) => {
       // toast.error('Nenhum movimento encontrado !');
       setListaCaixa([{ "id": "", "conta": "", "dataMovimento": "", "valor": "", "complemento": "", "mesAno": "", "idHistorico": "", "historicoPadrao": "NENHUM MOVIMENTO ENCONTRADO !", "statusLancamento": "", "nomeMembro": " " }]);
+      setBuscaSomasCaixa([{ "somaCredito": 0, "somaDebito": 0, "saldoAnterior": 0 }]);
       setCarregando(false);
     }).finally(() => {
       setCarregando(false);
@@ -166,12 +167,12 @@ export const TransparenciaFinanceira = () => {
                   <p>
                     {caixa?.statusLancamento == "D" ? (
                       `${caixa.valor}`
-                    ) : `-------`}
+                    ) : null}
                   </p>
                   <p>
                     {caixa?.statusLancamento == "C" ? (
                       `${caixa.valor}`
-                    ) : `-------`}
+                    ) : null}
                   </p>
                 </div>
               </li>
@@ -185,9 +186,13 @@ export const TransparenciaFinanceira = () => {
             return (
               <div key={somas.id}>
                 <div className="somasLancamentosMes">
-                  <p>Somas do Mês:</p>
-                  <p>{somas.somaDebito.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>{/* somaDebito */}
-                  <p>{somas.somaCredito.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>{/* somaCredito */}
+                  <p>Somas Mês:</p>
+                  <p>&#x00028;Déb: {/* somaDebito */}
+                    {somas.somaDebito.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}&#x00029;
+                  </p>
+                  <p>&#x00028;Créd: {/* somaCredito */}
+                    {somas.somaCredito.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}&#x00029;
+                  </p>
                 </div>
                 <div className="totaisInformados">
                   <div>
@@ -196,9 +201,14 @@ export const TransparenciaFinanceira = () => {
                     <p>Saldo Atual:</p>
                   </div>
                   <div>
-                    <p>{saldoAnterior.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>{/*saldoAnterior - nao esta vindo ainda */}
-                    <p><b>{(somas.somaCredito - somas.somaDebito).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</b></p> {/* saldoMes */}
-                    <p>{((saldoAnterior) + (somas.somaCredito - somas.somaDebito)).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>{/*saldoAnterior + saldoMes */}
+                    <p>{/*saldoAnterior - nao esta vindo ainda da API */}
+                      {somas.saldoAnterior.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                    <p> {/* saldoMes = credito - debito */}
+                      <b>{(somas.somaCredito - somas.somaDebito).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</b>
+                    </p>
+                    <p>{/* saldo atual = saldoAnterior + saldoMes */}
+                      {((somas.saldoAnterior) + (somas.somaCredito - somas.somaDebito)).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    </p>
                   </div>
                 </div>
               </div>
