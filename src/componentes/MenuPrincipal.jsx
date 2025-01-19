@@ -110,7 +110,7 @@ export const MenuPrincipal = () => {
         </li>
       </nav>
       <Modal
-        className="modalAlteraSenha"
+        className="modalPrincipal"
         open={modalAlteraSenhaAberto}
         onClose={fechaModal}
       >

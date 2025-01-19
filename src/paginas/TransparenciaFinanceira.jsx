@@ -9,20 +9,29 @@ import { Select } from "antd";
 import { AMBIENTE, URL_CAIXA } from "../compartilhados/constantes";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Modal } from "../componentes/";
+import { LancamentoCaixa } from "../paginas/LancamentoCaixa";
+import { toMoneyBr } from "../compartilhados/funcoes";
 
 export const TransparenciaFinanceira = () => {
   const [usuarioLogado, defineUsuarioLogado] = useRecoilState(usuarioLogadoAtom);
   const [carregando, setCarregando] = React.useState(false);
   const [listaCaixa, setListaCaixa] = React.useState([]);
   const [buscaSomasCaixa, setBuscaSomasCaixa] = React.useState([]);
-  const saldoAnterior = 0;
-
+  //const saldoAnterior = 0;
+  const [modalLancamento, setModalLancamento] = React.useState(false);
+  const alternaModalLancamento = () => {
+    setModalLancamento(!modalLancamento);
+  }
+  const fechaModalLancamento = () => {
+    setModalLancamento(false);
+  }
   // Preparando para o Select mes/ano 
   const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
   let options = new Object;
   let anos = new Date();
-  let mesAtual = 8; //anos.getMonth(); //array jan=0
-  anos = 2020; //anos.getFullYear(); // ano atual
+  let mesAtual = anos.getMonth(); //array jan=0
+  anos = anos.getFullYear(); // ano atual
   let contaSel = '1';
   let mesAnoSel = (mesAtual + 1) + "/" + anos;
   if (sessionStorage.getItem('eo-contaSel')) {
@@ -75,6 +84,7 @@ export const TransparenciaFinanceira = () => {
     setCarregando(true);
     axios.get(URL_CAIXA, {
       params: {
+        opc: 'buscaLancamentos',
         conta: contaSel,
         mesAno: mesAnoSel.toString().padStart(7, '0'),
         ambiente: AMBIENTE
@@ -93,6 +103,17 @@ export const TransparenciaFinanceira = () => {
     })
   }
 
+  const excluirLancCaixa = (id) => {
+    axios.delete(URL_CAIXA.concat("/", id)
+    ).then(() => {
+      //console.log(resposta.data);
+      toast.warn('Exclusão realizada com sucesso !');
+      buscarDadosCaixa(contaSel, mesAnoSel);
+    }).catch((erro) => {
+      toast.error("Erro na exclusão, verifique sua conexão.")
+      console.error('Erro no acesso:', erro);
+    })
+  }
   React.useEffect(() => {
     if (!carregando && listaCaixa.length === 0) {
       buscarDadosCaixa(contaSel, mesAnoSel);
@@ -101,7 +122,6 @@ export const TransparenciaFinanceira = () => {
 
   return (
     <>
-
       <div className="titTranspFinanc"><h3>Transparência Financeira</h3>
       </div>
       <div className="escolhaMes">
@@ -132,23 +152,8 @@ export const TransparenciaFinanceira = () => {
         </p>
       </div>
       <div className="cabecalhoCaixa">
-        {/*  <p>
-          <Popconfirm
-            title="Excluir Lançamento"
-            description="Confirma exclusão ?"
-            onConfirm={() => {
-              excluirLancCaixa()
-            }}
-            okText="Sim"
-            cancelText="Não"
-          >
-            <button type="button">
-              <DeleteOutlined />
-            </button>
-          </Popconfirm>
-        </p> */}
         <p>Dia</p>
-        <p>Descrição Lançamento</p>
+        <p>Lançamento/Complemento</p>
         <p>Débito</p>
         <p>Crédito</p>
       </div>
@@ -158,20 +163,41 @@ export const TransparenciaFinanceira = () => {
             return (
               <li key={caixa.id}>
                 <div className="dadosCaixa">
-                  <p>{caixa.dataMovimento.substr(8, 2)}</p>
+                  <p>
+                    {caixa.dataMovimento.substr(8, 2)}
+                    {usuarioLogado?.nivelAcesso == 2 || usuarioLogado?.nivelAcesso == 4 ? (
+                      <p>
+                        <Popconfirm
+                          title="Excluir Lançamento"
+                          description="Confirma exclusão ?"
+                          onConfirm={() => {
+                            excluirLancCaixa(caixa.id)
+                          }}
+                          okText="Sim"
+                          cancelText="Não"
+                        >
+                          <button type="button">
+                            <DeleteOutlined />
+                          </button>
+                        </Popconfirm>
+                      </p>
+                    ) : null}
+                  </p>
                   <p>
                     {caixa.historicoPadrao}
-                    {caixa?.idHistorico == 1 ?
-                      (` de ${caixa.nomeMembro} ref. mês ${caixa.mesAno}`) : ` ${caixa.complemento}`}
+                    <div>
+                      {caixa?.idHistorico == 1 ?
+                        (` de ${caixa.nomeMembro} (ref. mês ${caixa.mesAno})`) : ` ${caixa.complemento}`}
+                    </div>
                   </p>
                   <p>
                     {caixa?.statusLancamento == "D" ? (
-                      `${caixa.valor}`
+                      `${toMoneyBr(caixa.valor)}`
                     ) : null}
                   </p>
                   <p>
                     {caixa?.statusLancamento == "C" ? (
-                      `${caixa.valor}`
+                      `${toMoneyBr(caixa.valor)}`
                     ) : null}
                   </p>
                 </div>
@@ -187,11 +213,11 @@ export const TransparenciaFinanceira = () => {
               <div key={somas.id}>
                 <div className="somasLancamentosMes">
                   <p>Somas Mês:</p>
-                  <p>&#x00028;Déb: {/* somaDebito */}
-                    {somas.somaDebito.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}&#x00029;
+                  <p>&#x00028;Déb:
+                    {toMoneyBr(somas.somaDebito)}&#x00029;
                   </p>
-                  <p>&#x00028;Créd: {/* somaCredito */}
-                    {somas.somaCredito.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}&#x00029;
+                  <p>&#x00028;Créd:
+                    {toMoneyBr(somas.somaCredito)}&#x00029;
                   </p>
                 </div>
                 <div className="totaisInformados">
@@ -201,13 +227,13 @@ export const TransparenciaFinanceira = () => {
                     <p>Saldo Atual:</p>
                   </div>
                   <div>
-                    <p>{/*saldoAnterior - nao esta vindo ainda da API */}
-                      {somas.saldoAnterior.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
-                    <p> {/* saldoMes = credito - debito */}
-                      <b>{(somas.somaCredito - somas.somaDebito).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</b>
+                    <p>
+                      {toMoneyBr(somas.saldoAnterior)}</p>
+                    <p>
+                      <b>{toMoneyBr((somas.somaCredito - somas.somaDebito))}</b>
                     </p>
-                    <p>{/* saldo atual = saldoAnterior + saldoMes */}
-                      {((somas.saldoAnterior) + (somas.somaCredito - somas.somaDebito)).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                    <p>
+                      {toMoneyBr(((somas.saldoAnterior) + (somas.somaCredito - somas.somaDebito)))}
                     </p>
                   </div>
                 </div>
@@ -219,7 +245,7 @@ export const TransparenciaFinanceira = () => {
 
       <nav className="menuTranspFinanc">
         {usuarioLogado?.nivelAcesso > 3 ? (
-          <li>
+          <li onClick={alternaModalLancamento}>
             <OrderedListOutlined />
             <p>Lançamento</p>
           </li>
@@ -248,6 +274,13 @@ export const TransparenciaFinanceira = () => {
           </Link>
         </li>
       </nav>
+      <Modal
+        className="modalPrincipal modalLancamentoCaixa"
+        open={modalLancamento}
+        onClose={fechaModalLancamento}
+      >
+        <LancamentoCaixa onClose={fechaModalLancamento} contaSel={contaSel} />
+      </Modal>
     </>
   )
 }

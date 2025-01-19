@@ -10,7 +10,6 @@
   background: #ccc;
   width: 100%;
   display: flex;
-  /*gap: 1.3rem;*/
   padding: 0.1rem;
   font-size: 1rem;
   color: blue;
@@ -30,6 +29,7 @@
   background: #ccc;
   font-weight: bold;
   width: 100%;
+  height: 2rem;
   display: flex;
   margin-left: 2%;
   gap: 0.6rem;
@@ -37,45 +37,49 @@
   border: 2px solid #dee8f1;
   p {
     &:nth-child(3) {
-      margin-left: 14%;
+      margin-left: 7%;
     }
     &:nth-child(4) {
-      margin-left: 2%;
+      margin-left: 1.5%;
     }
   }
 }
 
 .containerDados {
+  position: relative;
   width: 100%;
   height: 65%;
   overflow-x: auto;
-  border: 2px solid #dee8f1;
+  display: flex;
+  flex-direction: column;
   li {
     width: 100%;
-    display: flex;
+    height: auto;
     padding: 0.1rem;
-    border: 3px solid #dee8f1;
+    border: 2px solid #dee8f1;
     p {
-      &:nth-child(1) {
-        /*dia */
-        width: 8%;
-        text-align: center;
+      &:nth-child(1) { /*dia */
+        width: 9%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        button {
+          color: red;
+        }
       }
-      &:nth-child(2) {
-        /* descrição  */
-        width: 56%;
+      &:nth-child(2) {/*Lançamento/Complemento*/
+        width: 51%;
       }
-      &:nth-child(3) {
-        /* debito */
+      &:nth-child(3) { /* debito */
         width: 20%;
         color: red;
         text-align: right;
       }
-      &:nth-child(4) {
-        /* credito */
+      &:nth-child(4) { /* credito */
         width: 20%;
         color: rgb(1, 67, 1);
         text-align: right;
+        padding-right: 0.2rem;
       }
     }
   }
@@ -88,6 +92,7 @@
 .containerSubTotais {
   width: 100%;
 }
+
 .somasLancamentosMes {
   background: #ccc;
   width: 100%;
@@ -124,7 +129,6 @@
     display: flex;
     gap: 0.3rem;
     padding-right: 0.5rem;
-
     p {
       width: 33%;
       font-size: 1rem;
@@ -137,12 +141,9 @@
 
 .menuTranspFinanc {
   width: 100%;
-  height: 11%;
+  height: 14%;
   display: flex;
   overflow: auto;
-  /*justify-content: center;
-  border: 1px solid red;*/
-
   li {
     /* background: #c5e5f3;*/
     background: #24027a;

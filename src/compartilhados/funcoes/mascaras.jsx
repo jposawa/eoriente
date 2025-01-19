@@ -43,3 +43,21 @@ export const dataDoBanco = (data) => {
   let dataBr = data.split('-').reverse().join('/');
   return dataBr;
 }
+export const dataParaBanco = (data) => {
+  let dataUs = data.split('/').reverse().join('-');
+  return dataUs;
+}
+
+export const formatarValor = (event) => {
+  const elemento = event.target;
+  let valor = elemento.value;
+  valor = valor.toString().replace(/\D/g,"");
+  valor = valor.toString().replace(/(\d)(\d{8})$/,"$1.$2");
+  valor = valor.toString().replace(/(\d)(\d{5})$/,"$1.$2");
+  valor = valor.toString().replace(/(\d)(\d{2})$/,"$1,$2");
+  elemento.value = valor;
+}
+
+export const toMoneyBr = (valor) => {
+  return (valor.toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 }));
+}

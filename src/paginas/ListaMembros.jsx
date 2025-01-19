@@ -17,10 +17,6 @@ export const ListaMembros = () => {
   const [carregando, defineCarregando] = React.useState(false);
   const [listaMembros, defineListaMembros] = React.useState([]);
   const filtro = useRecoilValue(situacaoMembroAtom);
-  /// para o transparencia financeira
-  sessionStorage.removeItem('eo-caixaSel');
-  sessionStorage.removeItem('eo-mesAnoSel');
-  ///
   
   const confirmarExclusao = (id) => {
     axios.delete(URL_MEMBROS.concat("/",id)
@@ -91,7 +87,8 @@ export const ListaMembros = () => {
                     {membro.logradouro}
                   </p>
                   <p>
-                    {membro.bairro} - {membro.cidade}
+                    {membro?.bairro.length > 0 ? (`${membro.bairro} - `) : null} 
+                    {membro.cidade}
                   </p>
                   <p>
                     <b>{membro.telCelular} {membro.telResidencial}</b>
@@ -132,7 +129,7 @@ export const ListaMembros = () => {
         }
       </ul>
       <Modal
-        className="modalAlteraSenha modalEnviaFotoMembro"
+        className="modalPrincipal modalEnviaFotoMembro"
         open={!!modalEnviaFotoMembroAberto}
         onClose={fechaModalEnviaFotoMembro}
       >

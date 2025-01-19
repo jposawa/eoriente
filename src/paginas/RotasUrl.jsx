@@ -2,6 +2,7 @@ import { Route, Routes } from "react-router-dom";
 import { Login } from "./Login.jsx";
 import { ListaMembros } from "./ListaMembros.jsx";
 import { AlteraSenha } from "./AlteraSenha.jsx";
+import { LancamentoCaixa } from "./LancamentoCaixa.jsx";
 import { CadastraMembros } from "./CadastraMembros.jsx";
 import { TransparenciaFinanceira } from "./TransparenciaFinanceira.jsx";
 export const RotasUrl = () => {
@@ -15,6 +16,9 @@ export const RotasUrl = () => {
       } />
       <Route path="alterasenha" element = {
         <AlteraSenha/>
+      } />
+      <Route path="lancamentocaixa" element = {
+        <LancamentoCaixa/>
       } />
       <Route path="cadastramembros/:id" element = {
         <CadastraMembros/>
