@@ -22,15 +22,16 @@ export const LancamentoCaixa = (props) => {
     axios.get(URL_CAIXA, {
       params: {
         opc: 'buscaHistoricoPadrao',
+        ambiente: AMBIENTE
       }
     })
       .then(response => {
         setDadosHistPad(response.data);
-        console.log(response.data);
+        //console.log(response.data);
         setLoading(false);
       })
       .catch(error => {
-        console.error('Erro ao buscar dados:', error);
+        //console.error('Erro ao buscar dados:', error);
         setLoading(false);
       });
   };
@@ -43,11 +44,11 @@ export const LancamentoCaixa = (props) => {
     })
       .then(response => {
         setDadosMembro(response.data);
-        console.log(response.data);
+        //console.log(response.data);
         setLoading(false);
       })
       .catch(error => {
-        console.error('Erro ao buscar dados:', error);
+        //console.error('Erro ao buscar dados:', error);
         setLoading(false);
       });
   };
@@ -61,12 +62,12 @@ export const LancamentoCaixa = (props) => {
       }
     })
       .then(response => {
-        console.log(response.data.mesApagar);
+        //console.log(response.data.mesApagar);
         setMesApagar(response.data.mesApagar);
         setLoading(false);
       })
       .catch(error => {
-        console.error('Erro ao buscar dados:', error);
+        //console.error('Erro ao buscar dados:', error);
         setLoading(false);
       });
   };
@@ -81,15 +82,15 @@ export const LancamentoCaixa = (props) => {
     event.preventDefault(); // para nao dar o refresh
     const { target } = event; // pegar os inputs
     const conta = contaSel;
-    console.log(conta);
+    //console.log(conta);
     const dataLancamento = target.dataLancamento.value;
     const valorLancamento = (target.valorLancamento.value).replace(/\./g, "").replace(",", ".");
     const usuLogado = usuarioLogado.cadastro;
     const complemento = target.complemento.value;
     axios.post(URL_CAIXA, { conta, valorHistoricoSel, idMembroSel, mesApagar, dataLancamento, valorLancamento, complemento,usuLogado, AMBIENTE }).then((resposta) => {
       toast.success(resposta);
-      window.location.reload();
       fechaModalLancamento();
+      window.location.reload();
     }).catch((erro) => {
       toast.error(erro);
     })
@@ -104,11 +105,11 @@ export const LancamentoCaixa = (props) => {
 
   const pegaValorHistoricoSel = (event) => {
     setValorHistoricoSel(event.target.value);
-    console.log('Valor Sel.: ', event.target.value);
+    //console.log('Valor Sel.: ', event.target.value);
   };
   const pegaIdMembroSel = (event) => {
     setIdMembroSel(event.target.value);
-    console.log('Membro Sel.: ', event.target.value);
+   // console.log('Membro Sel.: ', event.target.value);
     buscaMesApagar(event.target.value);
   };
 

@@ -4,7 +4,7 @@ export const URL_FOTOS_MEMBROS = 'https://datasystem-ce.com.br/eOriente/fotosMem
 export const URL_LOGIN = 'https://datasystem-ce.com.br/eOriente/api_eo_login.php';
 export const URL_MEMBROS = 'https://datasystem-ce.com.br/eOriente/api_eo_membros.php';
 export const URL_CAIXA = 'https://datasystem-ce.com.br/eOriente/api_eo_caixa.php';
-
+export const URL_HISTORICO_PADRAO = "https://datasystem-ce.com.br/eOriente/api_eo_historico_padrao.php";
 export const SITUACAO_MEMBROS = {
   ATIVO: "A",
   IRREGULARES: "I",

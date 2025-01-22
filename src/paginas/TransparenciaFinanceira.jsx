@@ -11,6 +11,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { Modal } from "../componentes/";
 import { LancamentoCaixa } from "../paginas/LancamentoCaixa";
+import { ResumoCaixaMes } from "../paginas/ResumoCaixaMes";
 import { toMoneyBr } from "../compartilhados/funcoes";
 
 export const TransparenciaFinanceira = () => {
@@ -18,7 +19,7 @@ export const TransparenciaFinanceira = () => {
   const [carregando, setCarregando] = React.useState(false);
   const [listaCaixa, setListaCaixa] = React.useState([]);
   const [buscaSomasCaixa, setBuscaSomasCaixa] = React.useState([]);
-  //const saldoAnterior = 0;
+  //// para o Modal para lançamento no caixa
   const [modalLancamento, setModalLancamento] = React.useState(false);
   const alternaModalLancamento = () => {
     setModalLancamento(!modalLancamento);
@@ -26,6 +27,15 @@ export const TransparenciaFinanceira = () => {
   const fechaModalLancamento = () => {
     setModalLancamento(false);
   }
+  //// para o Modal para Resumo Caixa Mes
+  const [modalResumoCaixaMes, setModalResumoCaixaMes] = React.useState(false);
+  const alternaModalResumoCaixaMes = () => {
+    setModalResumoCaixaMes(!modalResumoCaixaMes);
+  }
+  const fechaModalResumoCaixaMes = () => {
+    setModalResumoCaixaMes(false);
+  }
+  
   // Preparando para o Select mes/ano 
   const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
   let options = new Object;
@@ -250,21 +260,23 @@ export const TransparenciaFinanceira = () => {
             <p>Lançamento</p>
           </li>
         ) : null}
-        <li>
+        <li onClick={alternaModalResumoCaixaMes}>
           <CalculatorOutlined />
           <p>Resumo</p>
           <p>Mês</p>
         </li>
-        <li>
+      {/*}  <li>
           <ProjectOutlined />
           <p>Gráfico</p>
           <p>Mensal</p>
-        </li>
+        </li> */}
         {usuarioLogado?.nivelAcesso > 3 ? (
           <li>
-            <OrderedListOutlined />
-            <p>Manutenção</p>
-            <p>Lanç.Padrão</p>
+            <Link to='../lancamentospadroes'>
+              <OrderedListOutlined />
+              <p>Manutenção</p>
+              <p>Lanç.Padrão</p>
+            </Link>
           </li>
         ) : null}
         <li>
@@ -280,6 +292,13 @@ export const TransparenciaFinanceira = () => {
         onClose={fechaModalLancamento}
       >
         <LancamentoCaixa onClose={fechaModalLancamento} contaSel={contaSel} />
+      </Modal>
+      <Modal
+        className="modalPrincipal ModalResumoCaixaMes"
+        open={modalResumoCaixaMes}
+        onClose={fechaModalResumoCaixaMes}
+      >
+        <ResumoCaixaMes onClose={fechaModalResumoCaixaMes} mesAnoSel={mesAnoSel} />
       </Modal>
     </>
   )
