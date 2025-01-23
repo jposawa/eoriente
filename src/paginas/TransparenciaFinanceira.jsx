@@ -143,11 +143,11 @@ export const TransparenciaFinanceira = () => {
             options={[
               {
                 value: '1',
-                label: 'Caixa ',
+                label: 'Capítulo',
               },
               {
                 value: '2',
-                label: 'Tronco',
+                label: 'Solidariedade',
               },
             ]}
           />
@@ -265,11 +265,11 @@ export const TransparenciaFinanceira = () => {
           <p>Resumo</p>
           <p>Mês</p>
         </li>
-      {/*}  <li>
+        <li>
           <ProjectOutlined />
-          <p>Gráfico</p>
-          <p>Mensal</p>
-        </li> */}
+          <p>Gerar Arquivo</p>
+          <p>PDF</p>
+        </li>
         {usuarioLogado?.nivelAcesso > 3 ? (
           <li>
             <Link to='../lancamentospadroes'>

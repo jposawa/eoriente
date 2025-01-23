@@ -60,11 +60,11 @@ export const CadastraLancamentoPadrao = (props) => {
   return (
     <>
       <div className='titCadastroLancPadroes'>
-        <h3>Cadastra Lançamento</h3>
+        <h3>Cadastra/Altera Lançamento</h3>
       </div>
       <div className='containerFormCadLancPadroes'>
         <form onSubmit={cadAltLancPadrao}>
-          <p>Novo Lançamento Padrão:
+          <p>Nome Lançamento Padrão:
           <input name="id" type="hidden" defaultValue={dados?.id}/>
           </p>
           <p>

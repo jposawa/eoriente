@@ -82,17 +82,17 @@
 
 .menuManutLancPadroes {
   width: 100%;
-  height: 9%;
+  height: 11%;
   display: flex;
   overflow: auto;
 
   li {
     /* background: #c5e5f3;*/
-    background: #f0ca58;
-    width: 4rem;
+    background: #0d0398;
+    width: 6rem;
     display: flex;
     text-align: center;
-    color: #0d0398;
+    color: #fff;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -104,11 +104,11 @@
     border-radius: 0.5rem;
 
     span {
-      font-size: 1rem;
+      font-size: 1.6rem;
     }
 
     p {
-      font-size: 0.6rem;
+      font-size: 0.8rem;
     }
   }
 }

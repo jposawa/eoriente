@@ -6,7 +6,7 @@ import { AMBIENTE, URL_CAIXA } from "../compartilhados/constantes";
 export const ResumoCaixaMes = (props) => {
   const { onClose, mesAnoSel } = props;
   const [loading, setLoading] = React.useState(false);
-
+  const parts = [];
   const [dadosResumo, setDadosResumo] = React.useState([]);
 
   React.useEffect(() => {
@@ -42,7 +42,7 @@ export const ResumoCaixaMes = (props) => {
           {
             dadosResumo.map((res) => {
               return (
-                <li key={res.chave}>
+                <li key={res.id}>
                   <p>
                     {res}
                   </p>

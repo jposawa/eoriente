@@ -17,10 +17,11 @@
   border: 2px solid #dee8f1;
   p {
     &:nth-child(1) {
+      width: 50%;
       margin-left: 1%;
     }
     &:nth-child(2) {
-      margin-left: 17%;
+      margin-left: 1%;
     }
   }
 }

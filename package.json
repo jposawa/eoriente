@@ -18,6 +18,7 @@
     "cropperjs": "^1.6.2",
     "croppie": "^2.6.5",
     "dayjs": "^1.11.13",
+    "jspdf": "^2.5.2",
     "react": "^18.3.1",
     "react-confirm-toast": "^2.0.2",
     "react-cropper": "^2.3.3",
