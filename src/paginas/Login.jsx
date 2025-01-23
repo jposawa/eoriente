@@ -42,7 +42,7 @@ export const Login = () => {
   return (
     <>
       <div className='tituloLogin'>
-        <p className='logo'><img src="img/logo.jpg" /></p>
+        <p className='logo'><img src="img/novaLogoEstrela.png" /></p>
         <h3>{NOME_CAPITULO}</h3>
         <h4>{CIDADE_CAPITULO}</h4>
       </div>

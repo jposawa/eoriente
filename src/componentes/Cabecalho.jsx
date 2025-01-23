@@ -10,7 +10,7 @@ export const Cabecalho = (props) => {
   }
   return (
     <header className="cabecalho">
-      <img src="img/logoIcone.png" />
+      <img src="img/novaLogoEstrela.png" />
       <div className="dadosCabecalho">
         <h3>{NOME_CAPITULO}</h3>
         <h6>{CIDADE_CAPITULO}</h6>
