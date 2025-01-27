@@ -6,6 +6,7 @@ import './MenuPrincipal.css'
 import { Link } from 'react-router-dom'
 import { AuditOutlined, DollarOutlined, EditOutlined, FileExcelOutlined, LogoutOutlined, StarOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import { AlteraSenha } from "../paginas/AlteraSenha";
+import { MinhasMensalidades } from "../paginas/MinhasMensalidades";
 import { SITUACAO_MEMBROS } from "../compartilhados/constantes"
 import { Popconfirm } from "antd"
 
@@ -81,10 +82,12 @@ export const MenuPrincipal = () => {
         )
           : null}
         <li>
-          <AuditOutlined />
-          <p>Minhas Mensalidades</p>
-        </li> 
-        <li>      
+          <Link to='minhasmensalidades'>
+            <AuditOutlined />
+            <p>Minhas Mensalidades</p>
+          </Link>
+        </li>
+        <li>
           <Link to='transparenciafinanceira'>
             <DollarOutlined />
             <p>Transparência Financeira</p>

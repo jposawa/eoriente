@@ -59,6 +59,7 @@ export const LancamentoCaixa = (props) => {
       params: {
         opc: 'buscaMesApagar',
         id: id,
+        ambiente : AMBIENTE
       }
     })
       .then(response => {
