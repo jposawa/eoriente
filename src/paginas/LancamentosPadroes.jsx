@@ -106,7 +106,7 @@ export const LancamentosPadroes = () => {
       <nav className="menuManutLancPadroes">
         <li onClick={alternaModalManutLancPadroes}>
           <OrderedListOutlined />
-          <p>Cadastra Lançamento</p>
+          <p>Cadastrar</p>
         </li>
         <li>
           <Link to='../transparenciafinanceira'>

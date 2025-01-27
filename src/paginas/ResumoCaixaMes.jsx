@@ -8,7 +8,6 @@ export const ResumoCaixaMes = (props) => {
   const [loading, setLoading] = React.useState(false);
   const parts = [];
   const [dadosResumo, setDadosResumo] = React.useState([]);
-
   React.useEffect(() => {
     buscarDadosResumoCaixaMes(mesAnoSel);
   }, []);
@@ -24,7 +23,7 @@ export const ResumoCaixaMes = (props) => {
     })
       .then(response => {
         setDadosResumo(response.data);
-        //console.log(response.data);
+        console.log(response.data);
         setLoading(false);
       })
       .catch(error => {
@@ -42,9 +41,13 @@ export const ResumoCaixaMes = (props) => {
           {
             dadosResumo.map((res) => {
               return (
-                <li key={res.id}>
+                <li key={res.chave}>
+                  {res.historico == 'Capítulo - Despesas:' ? (
+                    <div className="destaqueSubTit">Capítulo - Despesas:</div>
+                  ) :
+                    <p>{res.historico}</p>}
                   <p>
-                    {res}
+                     {res.valor}
                   </p>
                 </li>
               )
