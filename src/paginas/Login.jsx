@@ -25,9 +25,14 @@ export const Login = () => {
         ambiente: AMBIENTE,
       }
     }).then((resposta) => {
-      defineUsuarioLogado(resposta.data)
-      sessionStorage.setItem('eo-dadosUsuario', JSON.stringify(resposta.data));
-      navigate('/listamembros');
+      if (resposta.data == 'Irregular') {
+        toast.error("Favor procurar a secretaria do Capítulo.");
+        navigate('/login');
+      } else {
+        defineUsuarioLogado(resposta.data)
+        sessionStorage.setItem('eo-dadosUsuario', JSON.stringify(resposta.data));
+        navigate('/listamembros');
+      }
     }).catch((erro) => {
       toast.error("Cadastro ou senha inválida !")
       console.error('Erro no acesso:', erro);

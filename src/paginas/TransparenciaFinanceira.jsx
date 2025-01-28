@@ -35,7 +35,7 @@ export const TransparenciaFinanceira = () => {
   const fechaModalResumoCaixaMes = () => {
     setModalResumoCaixaMes(false);
   }
-  
+
   // Preparando para o Select mes/ano 
   const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
   let options = new Object;
@@ -238,12 +238,27 @@ export const TransparenciaFinanceira = () => {
                   </div>
                   <div>
                     <p>
-                      {toMoneyBr(somas.saldoAnterior)}</p>
-                    <p>
-                      <b>{toMoneyBr((somas.somaCredito - somas.somaDebito))}</b>
+                      {somas.saldoAnterior < 0 ? (
+                        <span className="vlrNegativo">{toMoneyBr(somas.saldoAnterior)}
+                        </span>
+                      ) : <span className="vlrPositivo">{toMoneyBr(somas.saldoAnterior)}
+                      </span>}
                     </p>
                     <p>
-                      {toMoneyBr(((somas.saldoAnterior) + (somas.somaCredito - somas.somaDebito)))}
+                      <b>
+                        {(somas.somaCredito - somas.somaDebito) < 0 ? (
+                          <span className="vlrNegativo">{toMoneyBr((somas.somaCredito - somas.somaDebito))}
+                          </span>
+                        ) : <span className="vlrPositivo">{toMoneyBr((somas.somaCredito - somas.somaDebito))}
+                        </span>}
+                      </b>
+                    </p>
+                    <p>
+                      {((somas.saldoAnterior) + (somas.somaCredito - somas.somaDebito)) < 0 ? (
+                        <span className="vlrNegativo">{toMoneyBr(((somas.saldoAnterior) + (somas.somaCredito - somas.somaDebito)))}
+                        </span>
+                      ) : <span className="vlrPositivo">{toMoneyBr(((somas.saldoAnterior) + (somas.somaCredito - somas.somaDebito)))}
+                      </span>}
                     </p>
                   </div>
                 </div>
@@ -265,11 +280,14 @@ export const TransparenciaFinanceira = () => {
           <p>Resumo</p>
           <p>Mês</p>
         </li>
-        <li>
-          <ProjectOutlined />
-          <p>Gerar Arquivo</p>
-          <p>PDF</p>
-        </li>
+        {usuarioLogado?.nivelAcesso == 2 || usuarioLogado?.nivelAcesso == 4 ? (
+          <li>
+            <ProjectOutlined />
+            <p>Gerar Arquivo</p>
+            <p>PDF</p>
+          </li>
+        ) : null}
+
         {usuarioLogado?.nivelAcesso > 3 ? (
           <li>
             <Link to='../lancamentospadroes'>

@@ -109,12 +109,12 @@
     }
     &:nth-child(2) {
       width: 37%;
-      color: red;
+      /*color: red;*/
       text-align: right;
     }
     &:nth-child(3) {
       width: 37%;
-      color: rgb(1, 67, 1);
+      /*color: rgb(1, 67, 1);*/
       text-align: right;
     }
   }
@@ -139,7 +139,14 @@
     }
   }
 }
-
+.vlrPositivo
+{
+  color: green;
+}
+.vlrNegativo
+{
+  color: rgb(153, 0, 0);
+}
 .menuTranspFinanc {
   width: 100%;
   height: 14%;
