@@ -42,49 +42,59 @@ export const GerarPDFCaixa = (props) => {
   const mesesAbreviados = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
   const mesSel = mesesAbreviados[mesAnoSel.split('/', 1)[0] - 1] + '/' + mesAnoSel.split('/', 2)[1];
   const nomeArquivo = 'caixa_' + nomeConta + '_' + mesSel + '.pdf';
-  let lin = 42;
+  let lin = 41;
   //////////////////////////////////////////
   const geraPDF = () => {
     ///    inicia propriamente o relatorio PDF
     cabPDF();
     listaCaixaPDF.map((caixa) => {
-      lin = lin + 5;
+      lin = lin + 6;
+      let tamCompl = 0;
+      for (let i in caixa.complemento) {
+        if (caixa.complemento.hasOwnProperty(i)) {
+          tamCompl++;
+        }
+      }
       return (
         <li key={caixa.id}>
           {doc.text(caixa.dataMovimento.substr(8, 2), 6, lin)}
-          {doc.text(caixa.historicoPadrao, 14, lin)}
+          {doc.text(caixa.historicoPadrao.substr(0,34), 14, lin)}
           {caixa?.idHistorico == 1 ? (
-            doc.text(caixa.nomeMembro + ' (mês:' + caixa.mesAno + ')', 90,lin)) : doc.text([caixa.complemento], 90, lin)
+            doc.text([caixa.nomeMembro.substr(0,32)], 90, lin),lin = lin + 5,
+            doc.text(('(Ref. mês: ' + caixa.mesAno + ')'), 90, lin)) : doc.text([caixa.complemento.substr(0,32)], 90, lin)
           }
           {caixa?.statusLancamento == "D" ? (
-            `${doc.text(toMoneyBr(caixa.valor), 177, lin, { align: 'right' })}`
+            doc.text(toMoneyBr(caixa.valor), 177, lin, { align: 'right' })
           ) : null}
           {caixa?.statusLancamento == "C" ? (
-            `${doc.text(toMoneyBr(caixa.valor), 203, lin, { align: 'right' })}`
+            doc.text(toMoneyBr(caixa.valor), 203, lin, { align: 'right' })
           ) : null}
+          {doc.setDrawColor(0,255,0)}
+          {doc.line(5,lin+2,205,lin+2)}
+          {doc.setDrawColor(0,0,0)}          
         </li >
       )
     })
-//, { align: 'right' }
+    //, { align: 'right' }
     doc.save(nomeArquivo);
   }
-/*
-  const splitText = (texto, col, larg, alinhamento) => {
-    let splitTexto = doc.splitTextToSize(texto, larg);
-    
-    for (let i = 0; i < splitTexto.length; i++) {
-      if (lin > 175) {
-        lin = 47;
-        doc.addPage();
-        cabPDF();
-      }
-      doc.text(col, lin, splitTexto[i], {align : alinhamento});
+  /*
+    const splitText = (texto, col, larg, alinhamento) => {
+      let splitTexto = doc.splitTextToSize(texto, larg);
       
-        lin = lin + 5;
-       
+      for (let i = 0; i < splitTexto.length; i++) {
+        if (lin > 175) {
+          lin = 47;
+          doc.addPage();
+          cabPDF();
+        }
+        doc.text(col, lin, splitTexto[i], {align : alinhamento});
+        
+          lin = lin + 5;
+         
+      }
     }
-  }
-*/
+  */
   const cabPDF = () => {
     doc.setDisplayMode('fullwidth', 'single');
     //doc.setPage();
