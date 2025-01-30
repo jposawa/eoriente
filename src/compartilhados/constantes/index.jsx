@@ -1,5 +1,6 @@
 export const NOME_CAPITULO = 'Capítulo Charlotte Mendenhall N° 44';
 export const CIDADE_CAPITULO = 'Fortaleza-CE';
+export const POTENCIA_CAPITULO = 'Grande Loja Maçônica do Estado do Ceará';
 export const URL_FOTOS_MEMBROS = 'https://datasystem-ce.com.br/eOriente/fotosMembros/';
 export const URL_LOGIN = 'https://datasystem-ce.com.br/eOriente/api_eo_login.php';
 export const URL_MEMBROS = 'https://datasystem-ce.com.br/eOriente/api_eo_membros.php';

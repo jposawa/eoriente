@@ -35,14 +35,13 @@ export const AlteraSenha = (props) => {
       <div className='containerFormAlteraSenha'>
         <form className='form' onSubmit={efetuarAlteracao}>
           <div className='containerInput'>
-            <label>
-              <p>Nova Senha</p>
+
+            <p>Nova senha:
               <input type="password" name="senhaAlterar" required />
-            </label>
-            <label>
-              <p>Redigite Nova Senha</p>
+            </p>
+            <p>Redigite a nova senha:
               <input type="password" name="senhaRedigitada" required />
-            </label>
+            </p>
           </div>
           <section>
             <button className='bt_cancelar' type="reset" onClick={() => { onClose() }} >Cancelar</button>

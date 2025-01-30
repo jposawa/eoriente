@@ -13,6 +13,7 @@ import { Modal } from "../componentes/";
 import { LancamentoCaixa } from "../paginas/LancamentoCaixa";
 import { ResumoCaixaMes } from "../paginas/ResumoCaixaMes";
 import { toMoneyBr } from "../compartilhados/funcoes";
+import { GerarPDFCaixa } from './GerarPDFCaixa';
 
 export const TransparenciaFinanceira = () => {
   const [usuarioLogado, defineUsuarioLogado] = useRecoilState(usuarioLogadoAtom);
@@ -34,6 +35,14 @@ export const TransparenciaFinanceira = () => {
   }
   const fechaModalResumoCaixaMes = () => {
     setModalResumoCaixaMes(false);
+  }
+  //// para o Modal PDF Caixa
+  const [modalPDFCaixa, setModalPDFCaixa] = React.useState(false);
+  const alternaModalPDFCaixa = () => {
+    setModalPDFCaixa(!modalPDFCaixa);
+  }
+  const fechaModalPDFCaixa = () => {
+    setModalPDFCaixa(false);
   }
 
   // Preparando para o Select mes/ano 
@@ -129,7 +138,7 @@ export const TransparenciaFinanceira = () => {
       buscarDadosCaixa(contaSel, mesAnoSel);
     }
   }, []);
-
+  
   return (
     <>
       <div className="titTranspFinanc"><h3>Transparência Financeira</h3>
@@ -281,7 +290,7 @@ export const TransparenciaFinanceira = () => {
           <p>Mês</p>
         </li>
         {usuarioLogado?.nivelAcesso == 2 || usuarioLogado?.nivelAcesso == 4 ? (
-          <li>
+          <li onClick={alternaModalPDFCaixa}>
             <ProjectOutlined />
             <p>Gerar Arquivo</p>
             <p>PDF</p>
@@ -317,6 +326,13 @@ export const TransparenciaFinanceira = () => {
         onClose={fechaModalResumoCaixaMes}
       >
         <ResumoCaixaMes onClose={fechaModalResumoCaixaMes} mesAnoSel={mesAnoSel} />
+      </Modal>
+      <Modal
+        className="modalPrincipal modalPDFCaixa"
+        open={modalPDFCaixa}
+        onClose={fechaModalPDFCaixa}
+      >
+        <GerarPDFCaixa onClose={fechaModalPDFCaixa} contaSel={contaSel}  mesAnoSel={mesAnoSel} />
       </Modal>
     </>
   )

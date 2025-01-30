@@ -24,7 +24,7 @@ export const ResumoCaixaMes = (props) => {
     })
       .then(response => {
         setDadosResumo(response.data);
-        console.log(response.data);
+      //  console.log(response.data);
         setLoading(false);
       })
       .catch(error => {

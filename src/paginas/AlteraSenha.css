@@ -20,11 +20,16 @@
     }
   }
   input {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
   }
 }
-.containerInput{
+.containerInput {
   width: 100%;
+  p {
+    &:nth-child(2) {
+     padding-top: 1rem;
+    }
+  }
 }
 .bt_cancelar{
   width: 80%;

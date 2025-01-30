@@ -8,6 +8,7 @@ import { TransparenciaFinanceira } from "./TransparenciaFinanceira.jsx";
 import { LancamentosPadroes } from "./LancamentosPadroes.jsx";
 import { ResumoCaixaMes } from "./ResumoCaixaMes.jsx";
 import { MinhasMensalidades } from "./MinhasMensalidades.jsx";
+import { GerarPDFCaixa } from "./GerarPDFCaixa.jsx";
 
 export const RotasUrl = () => {
   return(
@@ -41,6 +42,9 @@ export const RotasUrl = () => {
       } />
       <Route path="minhasmensalidades" element = {
         <MinhasMensalidades/>
+      } />
+      <Route path="gerarpdfcaixa" element = {
+        <GerarPDFCaixa/>
       } />
       <Route path="/" exact element = {
         <ListaMembros/>
