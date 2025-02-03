@@ -5,7 +5,7 @@ import { usuarioLogadoAtom } from '../compartilhados/estados/'
 import { toast } from 'react-toastify'
 import { useSetRecoilState } from 'recoil'
 import { useNavigate } from 'react-router-dom'
-import { AMBIENTE, CIDADE_CAPITULO, NOME_CAPITULO, URL_LOGIN } from '../compartilhados/constantes'
+import { AMBIENTE, CIDADE_CAPITULO, LOGO_CAPITULO, NOME_CAPITULO, URL_LOGIN } from '../compartilhados/constantes'
 import { useRecoilValue } from 'recoil'
 
 export const Login = () => {
@@ -47,7 +47,7 @@ export const Login = () => {
   return (
     <>
       <div className='tituloLogin'>
-        <p className='logo'><img src="img/novaLogoEstrela.png" /></p>
+        <p className='logo'><img src={LOGO_CAPITULO} /></p>
         <h3>{NOME_CAPITULO}</h3>
         <h4>{CIDADE_CAPITULO}</h4>
       </div>
