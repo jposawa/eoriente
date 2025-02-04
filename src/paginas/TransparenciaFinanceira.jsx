@@ -1,7 +1,7 @@
 import React from "react";
 import './TransparenciaFinanceira.css';
 import { Popconfirm } from "antd";
-import { CalculatorOutlined, DeleteOutlined, OrderedListOutlined, ProjectOutlined, RollbackOutlined } from "@ant-design/icons";
+import Icon, { CalculatorOutlined, DeleteOutlined, ExceptionOutlined, OrderedListOutlined, ProjectOutlined, RollbackOutlined } from "@ant-design/icons";
 import { useRecoilState } from "recoil"
 import { usuarioLogadoAtom } from "../compartilhados/estados"
 import { Link } from "react-router-dom";
@@ -14,6 +14,7 @@ import { LancamentoCaixa } from "../paginas/LancamentoCaixa";
 import { ResumoCaixaMes } from "../paginas/ResumoCaixaMes";
 import { toMoneyBr } from "../compartilhados/funcoes";
 import { GerarPDFCaixa } from './GerarPDFCaixa';
+import { GerarInadimplentes } from './GerarInadimplentes';
 
 export const TransparenciaFinanceira = () => {
   const [usuarioLogado, defineUsuarioLogado] = useRecoilState(usuarioLogadoAtom);
@@ -44,6 +45,14 @@ export const TransparenciaFinanceira = () => {
   const fechaModalPDFCaixa = () => {
     setModalPDFCaixa(false);
   }
+   //// para o Modal Inadimplentes
+   const [modalInadimplentes, setModalInadimplentes] = React.useState(false);
+   const alternaModalInadimplentes = () => {
+     setModalInadimplentes(!modalInadimplentes);
+   }
+   const fechaModalInadimplentes = () => {
+     setModalInadimplentes(false);
+   }
 
   // Preparando para o Select mes/ano 
   const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
@@ -296,6 +305,12 @@ export const TransparenciaFinanceira = () => {
             <p>PDF</p>
           </li>
         ) : null}
+        {usuarioLogado?.nivelAcesso == 2 || usuarioLogado?.nivelAcesso == 4 ? (
+          <li onClick={alternaModalInadimplentes}>
+          <ExceptionOutlined />
+          <p>Inadimplentes</p>
+        </li>
+        ) : null}
 
         {usuarioLogado?.nivelAcesso > 3 ? (
           <li>
@@ -333,6 +348,13 @@ export const TransparenciaFinanceira = () => {
         onClose={fechaModalPDFCaixa}
       >
         <GerarPDFCaixa onClose={fechaModalPDFCaixa} contaSel={contaSel}  mesAnoSel={mesAnoSel} />
+      </Modal>
+      <Modal
+        className="modalPrincipal modalInadimplentes"
+        open={modalInadimplentes}
+        onClose={fechaModalInadimplentes}
+      >
+        <GerarInadimplentes onClose={fechaModalInadimplentes} />
       </Modal>
     </>
   )

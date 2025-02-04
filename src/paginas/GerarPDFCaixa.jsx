@@ -96,7 +96,7 @@ export const GerarPDFCaixa = (props) => {
     /// Inicia final do relatorio (arquivo PDF)
     somasCaixaPDF.slice(-1).map((saldos) => {
       lin = lin + 6;
-      if (lin > 255) {
+      if (lin > 120) { // 255
         lin = 47;
         doc.addPage();
         cabPDF();
@@ -150,11 +150,11 @@ export const GerarPDFCaixa = (props) => {
     doc.setLineWidth(0.1);
     doc.rect(5, 5, 200, 285);
     //// faz o rodape
-    const totPag = doc.getNumberOfPages();
-    nPag++;
+    //const tPag = doc.getNumberOfPages();// getPageInfo(1).pageNumber;
+    nPag = doc.getNumberOfPages();
     doc.setFontSize(7);
     doc.text('Impresso por Sistemas Web - (11) 9 6769-3975 - Todos os Direitos Reservados', 90, 293);
-    doc.text('Página: ' + nPag + '/' + totPag, 185, 293);
+    doc.text('Página: ' + nPag, 190, 293);
     ////// fim rodape
     doc.addImage(LOGO_CAPITULO, 6, 6, 30, 30);
     doc.setFontSize(14);

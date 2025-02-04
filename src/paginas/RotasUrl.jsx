@@ -9,6 +9,7 @@ import { LancamentosPadroes } from "./LancamentosPadroes.jsx";
 import { ResumoCaixaMes } from "./ResumoCaixaMes.jsx";
 import { MinhasMensalidades } from "./MinhasMensalidades.jsx";
 import { GerarPDFCaixa } from "./GerarPDFCaixa.jsx";
+import { GerarInadimplentes } from "./GerarInadimplentes.jsx";
 
 export const RotasUrl = () => {
   return(
@@ -45,6 +46,9 @@ export const RotasUrl = () => {
       } />
       <Route path="gerarpdfcaixa" element = {
         <GerarPDFCaixa/>
+      } />
+      <Route path="gerarinadimplentes" element = {
+        <GerarInadimplentes/>
       } />
       <Route path="/" exact element = {
         <ListaMembros/>
