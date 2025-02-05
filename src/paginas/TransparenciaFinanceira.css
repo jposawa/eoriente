@@ -224,18 +224,50 @@
 
 .modalInadimplentes {
   width: 100%;
-  height: 28rem;
+  height: 32rem;
   overflow: hidden;
-  background: #91c7f6;
+  background: #77a8d4;
   padding: 0.5rem;
   border: 2px solid #fff;
+  ul {
+    margin-top: 0.5rem;
+    overflow: auto;
+    height: 22rem;
+    background: #91c7f6;
+    div {
+      display: flex;
+    }
+    p {
+      &:nth-child(1) {
+        width: 60%;
+       }
+       &:nth-child(2) {
+        width: 20%;
+        text-align: center;
+       }
+       &:nth-child(3) {
+        width: 20%;
+        text-align: center;
+       }
+    }
+  }
+  li {
+    padding: 0.3rem;
+    height: 2.7rem;
+    margin-top: 0.7rem;
+    &:nth-child(1n) {
+      /*fazer estilo folha zebra*/
+      background: #c0e4f4;
+    }
+  }
 }
 .titInadimplentes {
   width: 100%;
+  height: 2.5rem;
   background: #376389;
   color: #fff;
   text-align: center;
-  padding: 0.1rem;
+  padding: 0.6rem;
 }
 .cabInadimplentes {
   width: 100%;
@@ -246,27 +278,7 @@
   p {
     &:nth-child(1) {
       width: 60%;
-     }
-     &:nth-child(2) {
-      width: 20%;
-      text-align: center;
-     }
-     &:nth-child(3) {
-      width: 20%;
-      text-align: center;
-     }
-  }
-}
-.containerInadimplentes {
-  width: 100%;
-  margin-top: 0.5rem;
-  overflow: auto;
-  height: 18rem;
-  display: flex;
-  border: 1px solid;
-  p {
-    &:nth-child(1) {
-      width: 60%;
+      padding-top: 1.3rem;
      }
      &:nth-child(2) {
       width: 20%;
@@ -281,8 +293,8 @@
 
 .bt_fecharInadimplentes {
   width: 50%;
-  height: 2rem;
-  margin-top: 0.8rem;
+  height: 2.2rem;
+  margin-top: 0.5rem;
   margin-left: 25%;
   font-size: 1.2rem;
 }

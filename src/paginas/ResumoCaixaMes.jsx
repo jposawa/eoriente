@@ -42,7 +42,7 @@ export const ResumoCaixaMes = (props) => {
           {
             dadosResumo.map((res) => {
               return (
-                <li key={res.chave}>
+                <li key={res.id}>
                   {res?.historico == 'Capítulo - Despesas:' ? (
                     <div className="destaqueSubTit">Capítulo - Despesas:</div>
                   ) : null}
@@ -74,7 +74,7 @@ export const ResumoCaixaMes = (props) => {
           {
             dadosResumo.slice(-1).map((res) => {
               return (
-                <li key={res.chave}>
+                <li key={res.id}>
                   <div>T O T A I S</div>
                   <div>
                     <b>Capítulo:</b>

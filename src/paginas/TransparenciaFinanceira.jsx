@@ -1,7 +1,7 @@
 import React from "react";
 import './TransparenciaFinanceira.css';
 import { Popconfirm } from "antd";
-import Icon, { CalculatorOutlined, DeleteOutlined, ExceptionOutlined, OrderedListOutlined, ProjectOutlined, RollbackOutlined } from "@ant-design/icons";
+import { CalculatorOutlined, DeleteOutlined, ExceptionOutlined, OrderedListOutlined, ProjectOutlined, RollbackOutlined } from "@ant-design/icons";
 import { useRecoilState } from "recoil"
 import { usuarioLogadoAtom } from "../compartilhados/estados"
 import { Link } from "react-router-dom";
@@ -287,7 +287,7 @@ export const TransparenciaFinanceira = () => {
       </div>
 
       <nav className="menuTranspFinanc">
-        {usuarioLogado?.nivelAcesso > 3 ? (
+        {usuarioLogado?.nivelAcesso == 2 || usuarioLogado?.nivelAcesso == 4 ? (
           <li onClick={alternaModalLancamento}>
             <OrderedListOutlined />
             <p>Lançamento</p>
@@ -312,7 +312,7 @@ export const TransparenciaFinanceira = () => {
         </li>
         ) : null}
 
-        {usuarioLogado?.nivelAcesso > 3 ? (
+        {usuarioLogado?.nivelAcesso == 2 || usuarioLogado?.nivelAcesso == 4 ? (
           <li>
             <Link to='../lancamentospadroes'>
               <OrderedListOutlined />
