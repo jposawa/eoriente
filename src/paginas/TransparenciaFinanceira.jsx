@@ -45,14 +45,14 @@ export const TransparenciaFinanceira = () => {
   const fechaModalPDFCaixa = () => {
     setModalPDFCaixa(false);
   }
-   //// para o Modal Inadimplentes
-   const [modalInadimplentes, setModalInadimplentes] = React.useState(false);
-   const alternaModalInadimplentes = () => {
-     setModalInadimplentes(!modalInadimplentes);
-   }
-   const fechaModalInadimplentes = () => {
-     setModalInadimplentes(false);
-   }
+  //// para o Modal Inadimplentes
+  const [modalInadimplentes, setModalInadimplentes] = React.useState(false);
+  const alternaModalInadimplentes = () => {
+    setModalInadimplentes(!modalInadimplentes);
+  }
+  const fechaModalInadimplentes = () => {
+    setModalInadimplentes(false);
+  }
 
   // Preparando para o Select mes/ano 
   const meses = ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'];
@@ -142,12 +142,13 @@ export const TransparenciaFinanceira = () => {
       console.error('Erro no acesso:', erro);
     })
   }
+
   React.useEffect(() => {
     if (!carregando && listaCaixa.length === 0) {
       buscarDadosCaixa(contaSel, mesAnoSel);
     }
   }, []);
-  
+
   return (
     <>
       <div className="titTranspFinanc"><h3>Transparência Financeira</h3>
@@ -185,106 +186,112 @@ export const TransparenciaFinanceira = () => {
         <p>Débito</p>
         <p>Crédito</p>
       </div>
-      <ul className="containerDados">
-        {
-          listaCaixa.map((caixa) => {
-            return (
-              <li key={caixa.id}>
-                <div className="dadosCaixa">
-                  <p>
-                    {caixa.dataMovimento.substr(8, 2)}
-                    {usuarioLogado?.nivelAcesso == 2 || usuarioLogado?.nivelAcesso == 4 ? (
-                      <p>
-                        <Popconfirm
-                          title="Excluir Lançamento"
-                          description="Confirma exclusão ?"
-                          onConfirm={() => {
-                            excluirLancCaixa(caixa.id)
-                          }}
-                          okText="Sim"
-                          cancelText="Não"
-                        >
-                          <button type="button">
-                            <DeleteOutlined />
-                          </button>
-                        </Popconfirm>
-                      </p>
-                    ) : null}
-                  </p>
-                  <p>
-                    {caixa.historicoPadrao}
-                    <div>
-                      {caixa?.idHistorico == 1 ?
-                        (` de ${caixa.nomeMembro} (ref. mês ${caixa.mesAno})`) : ` ${caixa.complemento}`}
-                    </div>
-                  </p>
-                  <p>
-                    {caixa?.statusLancamento == "D" ? (
-                      `${toMoneyBr(caixa.valor)}`
-                    ) : null}
-                  </p>
-                  <p>
-                    {caixa?.statusLancamento == "C" ? (
-                      `${toMoneyBr(caixa.valor)}`
-                    ) : null}
-                  </p>
-                </div>
-              </li>
-            )
-          })
-        }
-      </ul>
-      <div className="containerSubTotais">
-        {
-          buscaSomasCaixa.slice(-1).map((somas) => {
-            return (
-              <div key={somas.id}>
-                <div className="somasLancamentosMes">
-                  <p>Somas Mês:</p>
-                  <p>&#x00028;Déb:
-                    {toMoneyBr(somas.somaDebito)}&#x00029;
-                  </p>
-                  <p>&#x00028;Créd:
-                    {toMoneyBr(somas.somaCredito)}&#x00029;
-                  </p>
-                </div>
-                <div className="totaisInformados">
-                  <div>
-                    <p>Saldo Anterior:</p>
-                    <p><b>Saldo do Mês:</b></p>
-                    <p>Saldo Atual:</p>
-                  </div>
-                  <div>
+      {!listaCaixa.length ? (
+        <h4>Nenhum lançamento encontrado</h4>
+      ) : (
+        <ul className="containerDados">
+          {
+            listaCaixa.map((caixa) => {
+              return (
+                <li key={caixa.id}>
+                  <div className="dadosCaixa">
                     <p>
-                      {somas.saldoAnterior < 0 ? (
-                        <span className="vlrNegativo">{toMoneyBr(somas.saldoAnterior)}
-                        </span>
-                      ) : <span className="vlrPositivo">{toMoneyBr(somas.saldoAnterior)}
-                      </span>}
+                      {caixa.dataMovimento.substr(8, 2)}
+                      {usuarioLogado?.nivelAcesso == 2 || usuarioLogado?.nivelAcesso == 4 ? (
+                        <p>
+                          <Popconfirm
+                            title="Excluir Lançamento"
+                            description="Confirma exclusão ?"
+                            onConfirm={() => {
+                              excluirLancCaixa(caixa.id)
+                            }}
+                            okText="Sim"
+                            cancelText="Não"
+                          >
+                            <button type="button">
+                              <DeleteOutlined />
+                            </button>
+                          </Popconfirm>
+                        </p>
+                      ) : null}
                     </p>
                     <p>
-                      <b>
-                        {(somas.somaCredito - somas.somaDebito) < 0 ? (
-                          <span className="vlrNegativo">{toMoneyBr((somas.somaCredito - somas.somaDebito))}
-                          </span>
-                        ) : <span className="vlrPositivo">{toMoneyBr((somas.somaCredito - somas.somaDebito))}
-                        </span>}
-                      </b>
+                      {caixa.historicoPadrao}
+                      <div>
+                        {caixa?.idHistorico == 1 ?
+                          (` de ${caixa.nomeMembro} (ref. mês ${caixa.mesAno})`) : ` ${caixa.complemento}`}
+                      </div>
                     </p>
                     <p>
-                      {((somas.saldoAnterior) + (somas.somaCredito - somas.somaDebito)) < 0 ? (
-                        <span className="vlrNegativo">{toMoneyBr(((somas.saldoAnterior) + (somas.somaCredito - somas.somaDebito)))}
-                        </span>
-                      ) : <span className="vlrPositivo">{toMoneyBr(((somas.saldoAnterior) + (somas.somaCredito - somas.somaDebito)))}
-                      </span>}
+                      {caixa?.statusLancamento == "D" ? (
+                        `${toMoneyBr(caixa.valor)}`
+                      ) : null}
+                    </p>
+                    <p>
+                      {caixa?.statusLancamento == "C" ? (
+                        `${toMoneyBr(caixa.valor)}`
+                      ) : null}
                     </p>
                   </div>
-                </div>
-              </div>
-            )
+                </li>
+              )
+            })
           }
-          )}
-      </div>
+        </ul>
+      )}
+      {listaCaixa?.length > 0 && (
+        <div className="containerSubTotais">
+          {
+            buscaSomasCaixa.slice(-1).map((somas) => {
+              return (
+                <div key={somas.id}>
+                  <div className="somasLancamentosMes">
+                    <p>Somas Mês:</p>
+                    <p>&#x00028;Déb:
+                      {toMoneyBr(somas.somaDebito)}&#x00029;
+                    </p>
+                    <p>&#x00028;Créd:
+                      {toMoneyBr(somas.somaCredito)}&#x00029;
+                    </p>
+                  </div>
+                  <div className="totaisInformados">
+                    <div>
+                      <p>Saldo Anterior:</p>
+                      <p><b>Saldo do Mês:</b></p>
+                      <p>Saldo Atual:</p>
+                    </div>
+                    <div>
+                      <p>
+                        {somas.saldoAnterior < 0 ? (
+                          <span className="vlrNegativo">{toMoneyBr(somas.saldoAnterior)}
+                          </span>
+                        ) : <span className="vlrPositivo">{toMoneyBr(somas.saldoAnterior)}
+                        </span>}
+                      </p>
+                      <p>
+                        <b>
+                          {(somas.somaCredito - somas.somaDebito) < 0 ? (
+                            <span className="vlrNegativo">{toMoneyBr((somas.somaCredito - somas.somaDebito))}
+                            </span>
+                          ) : <span className="vlrPositivo">{toMoneyBr((somas.somaCredito - somas.somaDebito))}
+                          </span>}
+                        </b>
+                      </p>
+                      <p>
+                        {((somas.saldoAnterior) + (somas.somaCredito - somas.somaDebito)) < 0 ? (
+                          <span className="vlrNegativo">{toMoneyBr(((somas.saldoAnterior) + (somas.somaCredito - somas.somaDebito)))}
+                          </span>
+                        ) : <span className="vlrPositivo">{toMoneyBr(((somas.saldoAnterior) + (somas.somaCredito - somas.somaDebito)))}
+                        </span>}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )
+            }
+            )}
+        </div>
+      )}
 
       <nav className="menuTranspFinanc">
         {usuarioLogado?.nivelAcesso == 2 || usuarioLogado?.nivelAcesso == 4 ? (
@@ -307,9 +314,9 @@ export const TransparenciaFinanceira = () => {
         ) : null}
         {usuarioLogado?.nivelAcesso == 2 || usuarioLogado?.nivelAcesso == 4 ? (
           <li onClick={alternaModalInadimplentes}>
-          <ExceptionOutlined />
-          <p>Inadimplentes</p>
-        </li>
+            <ExceptionOutlined />
+            <p>Inadimplentes</p>
+          </li>
         ) : null}
 
         {usuarioLogado?.nivelAcesso == 2 || usuarioLogado?.nivelAcesso == 4 ? (
@@ -347,7 +354,7 @@ export const TransparenciaFinanceira = () => {
         open={modalPDFCaixa}
         onClose={fechaModalPDFCaixa}
       >
-        <GerarPDFCaixa onClose={fechaModalPDFCaixa} contaSel={contaSel}  mesAnoSel={mesAnoSel} />
+        <GerarPDFCaixa onClose={fechaModalPDFCaixa} contaSel={contaSel} mesAnoSel={mesAnoSel} />
       </Modal>
       <Modal
         className="modalPrincipal modalInadimplentes"
