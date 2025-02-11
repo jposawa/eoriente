@@ -10,7 +10,7 @@
 }
 
 .cabecalho{
-  background-image: linear-gradient(270deg, rgb(249, 145, 145), rgb(255, 255, 42));
+  background-image: linear-gradient(270deg, rgb(244, 191, 107), #fff);
   /*background: #ccc;*/
   display: flex;
   justify-content: space-between;

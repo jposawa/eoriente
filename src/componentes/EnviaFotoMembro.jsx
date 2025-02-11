@@ -38,6 +38,10 @@ export const EnviaFotoMembro = (props) => {
     hiddenFileInput.current.click();
   }
 
+  const buscaImagemVazia = (event) => {
+    event.target.src = `${URL_FOTOS_MEMBROS}f000.jpg`;
+  }
+
   const fechaModal = () => {
     setFile(null);
     setImage(null);
@@ -85,7 +89,7 @@ export const EnviaFotoMembro = (props) => {
     <>
       <div className='containerFormEnviaFotoMembro'>
         <h3 className='tituloEnviaFotoMembro'>Enviando Foto Membro</h3>
-        <img className='fotoAtual' src={`${URL_FOTOS_MEMBROS}${dadosMembro?.arqFoto}`} />
+        <img className='fotoAtual' src={`${URL_FOTOS_MEMBROS}${dadosMembro?.arqFoto}`} onError={buscaImagemVazia} />
         <h4>{dadosMembro?.nome}</h4>
         <form onSubmit={handleSubmit}>
           <input type="file" ref={hiddenFileInput} onChange={handleFileChange} />

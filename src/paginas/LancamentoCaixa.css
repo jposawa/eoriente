@@ -1,0 +1,47 @@
+.modalLancamentoCaixa {
+  width: 100%;
+  height: 20rem;
+  background: #b6cbe9;
+}
+
+.titLancamentoCaixa {
+  width: 100%;
+  background: rgb(6, 92, 162);
+  color: #fff;
+  text-align: center;
+  padding: 0.1rem;
+}
+
+.containerFormLancCaixa {
+  width: 100%;
+  height: 100%;
+  padding: 0.7rem;
+  input {
+    font-size: 1.2rem;
+  }
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+  button {
+    width: 40%;
+    height: 2.5rem;
+    font-size: 1.2rem;
+    margin-top: 7%;
+    margin-left: 2%;
+    &:nth-child(2) {
+      margin-left: 16%;
+    }
+  }
+}
+
+.ocultaMembro {
+  display: none;
+}
+
+.referenteMes {
+  margin-top: 3%;
+  color: red;
+}

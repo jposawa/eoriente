@@ -5,7 +5,7 @@ import { usuarioLogadoAtom } from '../compartilhados/estados/'
 import { toast } from 'react-toastify'
 import { useSetRecoilState } from 'recoil'
 import { useNavigate } from 'react-router-dom'
-import { AMBIENTE, CIDADE_CAPITULO, NOME_CAPITULO } from '../compartilhados/constantes'
+import { AMBIENTE, CIDADE_CAPITULO, LOGO_CAPITULO, NOME_CAPITULO, URL_LOGIN } from '../compartilhados/constantes'
 import { useRecoilValue } from 'recoil'
 
 export const Login = () => {
@@ -18,16 +18,21 @@ export const Login = () => {
     const { target } = event; // pegar os inputs
     const valorcadastro = target.cadastro.value; // pega os valores inputs
     const valorsenha = target.senha.value;
-    axios.get('https://datasystem-ce.com.br/eOriente/api_eo_login.php', {
+    axios.get(URL_LOGIN, {
       params: { // para POST nao precisa do 'params'
         login: valorcadastro,
         senha: valorsenha,
         ambiente: AMBIENTE,
       }
     }).then((resposta) => {
-      defineUsuarioLogado(resposta.data)
-      sessionStorage.setItem('eo-dadosUsuario', JSON.stringify(resposta.data));
-      navigate('/listamembros');
+      if (resposta.data == 'Irregular') {
+        toast.error("Favor procurar a secretaria do Capítulo.");
+        navigate('/login');
+      } else {
+        defineUsuarioLogado(resposta.data)
+        sessionStorage.setItem('eo-dadosUsuario', JSON.stringify(resposta.data));
+        navigate('/listamembros');
+      }
     }).catch((erro) => {
       toast.error("Cadastro ou senha inválida !")
       console.error('Erro no acesso:', erro);
@@ -42,7 +47,7 @@ export const Login = () => {
   return (
     <>
       <div className='tituloLogin'>
-        <p className='logo'><img src="img/logo.jpg" /></p>
+        <p className='logo'><img src={LOGO_CAPITULO} /></p>
         <h3>{NOME_CAPITULO}</h3>
         <h4>{CIDADE_CAPITULO}</h4>
       </div>

@@ -1,0 +1,79 @@
+.titMinhasMensalidades {
+  width: 100%;
+  background: rgb(235, 149, 37);
+  color: #1f037b;
+  text-align: center;
+  padding: 0.1rem;
+}
+
+.containerMinhasMensalidades {
+  width: 100%;
+  height: 36rem;
+  overflow: auto;
+}
+
+.cabMinhasMensalidades,
+.cMensVencida,
+.cProxMens,
+.cMensPagas {
+  width: 100%;
+  li {
+    background: linear-gradient(180deg, rgb(246, 44, 44), #fff);
+    height: 3rem;
+    display: flex;
+    padding-top: 0.7rem;
+    overflow: hidden;
+    p {
+      &:nth-child(1) {
+        width: 20%;
+        text-align: center;
+      }
+      &:nth-child(2) {
+        width: 20%;
+        margin-left: 1%;
+        text-align: center;
+      }
+      &:nth-child(3) {
+        width: 20%;
+        margin-left: 1%;
+        text-align: center;
+      }
+      &:nth-child(4) {
+        width: 20%;
+        margin-left: 1%;
+        text-align: center;
+      }
+      &:nth-child(5) {
+        width: 20%;
+        margin-left: 1%;
+        text-align: center;
+        color: blue;
+        font-size: 0.9rem;
+        font-weight: bold;
+      }
+    }
+  }
+}
+.cabMinhasMensalidades {
+  li {
+    background: rgb(84, 124, 234);
+    height: 2rem;
+    padding-top: 0.4rem;
+  }
+}
+.cMensPagas {
+  li {
+    background: linear-gradient(180deg, rgb(44, 255, 44), #fff);
+  }
+}
+.cProxMens {
+  li {
+    background: linear-gradient(180deg, rgb(248, 231, 44), #fff);
+  }
+}
+.msgMens {
+  width: 100%;
+  text-align: center;
+  font-size: 1.2rem;
+  color: blue;
+}

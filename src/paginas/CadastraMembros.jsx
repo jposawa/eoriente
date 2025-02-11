@@ -39,6 +39,15 @@ export const CadastraMembros = () => {
     //console.log(ev.target.value);
     setRadioValueSituacao(ev.target.value);
   }
+
+  const verificaRequired = () => {
+    if (radioValueSituacao === "F") {
+      return (true);
+    } else {
+      return (false);
+    }
+  }
+
   React.useEffect(() => {
     redirecionaAcessoRestrito();
 
@@ -310,7 +319,7 @@ export const CadastraMembros = () => {
           </span>
           <div className={radioValueSituacao === "F" ? "" : "ocultaVinculoMaconico"}>
             <p>
-              <Input name="dataFalecimento" type="date" defaultValue={dadosMembro?.dataFalecimento} label="Dt Falecimento:" />
+              <Input name="dataFalecimento" type="date" defaultValue={dadosMembro?.dataFalecimento} label="Dt Falecimento:"  required={verificaRequired()} />
             </p>
           </div>
           <div className="bt_cadMembro">

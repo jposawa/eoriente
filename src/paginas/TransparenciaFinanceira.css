@@ -1,14 +1,300 @@
 .titTranspFinanc {
-
+  width: 100%;
+  background: rgb(12, 2, 89);
+  color: #fff;
+  text-align: center;
+  padding: 0.1rem;
 }
 
-.corpoTranspFinanc {
-
+.escolhaMes {
+  background: #ccc;
+  width: 100%;
+  display: flex;
+  padding: 0.1rem;
+  font-size: 1rem;
+  color: blue;
+  font-weight: bold;
+  border: 2px solid #dee8f1;
+  p {
+    &:nth-child(1) {
+      width: 50%;
+      margin-left: 1%;
+    }
+    &:nth-child(2) {
+      margin-left: 1%;
+    }
+  }
 }
+
+.cabecalhoCaixa {
+  background: #ccc;
+  font-weight: bold;
+  width: 100%;
+  height: 1.6rem;
+  display: flex;
+  margin-left: 2%;
+  font-size: 1rem;
+  border: 2px solid #dee8f1;
+  padding: 0.1rem;
+  p {
+    &:nth-child(1) {
+      width: 9%;
+      text-align: center;
+    }
+    &:nth-child(2) {
+      width: 51%;
+    }
+    &:nth-child(3) {
+      width: 20%;
+      text-align: right;
+    }
+    &:nth-child(4) {
+      width: 20%;
+      text-align: right;
+    }  
+  }
+}
+
+.containerDados {
+  position: relative;
+  width: 100%;
+  height: 65%;
+  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+  li {
+    width: 100%;
+    height: auto;
+    padding: 0.1rem;
+    border: 2px solid #dee8f1;
+    p {
+      &:nth-child(1) { /*dia */
+        width: 9%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        button {
+          color: red;
+        }
+      }
+      &:nth-child(2) {/*Lançamento/Complemento*/
+        width: 51%;
+      }
+      &:nth-child(3) { /* debito */
+        width: 20%;
+        color: red;
+        text-align: right;
+      }
+      &:nth-child(4) { /* credito */
+        width: 20%;
+        color: rgb(1, 67, 1);
+        text-align: right;
+        padding-right: 0.2rem;
+      }
+    }
+  }
+}
+
+.dadosCaixa {
+  display: flex;
+}
+
+.containerSubTotais {
+  width: 100%;
+}
+
+.somasLancamentosMes {
+  background: #ccc;
+  width: 100%;
+  height: 4.5%;
+  display: flex;
+  font-weight: bold;
+  padding: 0.3rem;
+  border: 2px solid #dee8f1;
+  p {
+    &:nth-child(1) {
+      margin-left: 5%;
+      width: 25%;
+    }
+    &:nth-child(2) {
+      width: 37%;
+      /*color: red;*/
+      text-align: right;
+    }
+    &:nth-child(3) {
+      width: 37%;
+      /*color: rgb(1, 67, 1);*/
+      text-align: right;
+    }
+  }
+}
+
 .totaisInformados {
-
+  background: #ddd;
+  width: 100%;
+  height: 7%;
+  border: 2px solid #dee8f1;
+  div {
+    width: 100%;
+    display: flex;
+    gap: 0.3rem;
+    padding-right: 0.5rem;
+    p {
+      width: 33%;
+      font-size: 1rem;
+      display: flex;
+      color: #000;
+      justify-content: right;
+    }
+  }
+}
+.vlrPositivo
+{
+  color: green;
+}
+.vlrNegativo
+{
+  color: rgb(153, 0, 0);
+}
+.menuTranspFinanc {
+  width: 100%;
+  height: 14%;
+  display: flex;
+  overflow: auto;
+  li {
+    /* background: #c5e5f3;*/
+    background: #24027a;
+    width: 6rem;
+    display: flex;
+    text-align: center;
+    gap: 0.2rem;
+    padding: 0.3rem 0;
+    color: #fff;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 4px solid #fff;
+    font-size: 1rem;
+    flex-shrink: 0;
+    /* nao encolher para caber no container */
+    flex-grow: 0;
+    /* nao crescer e nao preencher o container */
+    border-radius: 0.7rem;
+    span {
+      font-size: 1.2rem;
+    }
+    p {
+      font-size: 0.8rem;
+    }
+  }
 }
 
-.menuTranspFinanc {
-  
+.titGerarPDF {
+  width: 100%;
+  background: rgb(12, 2, 89);
+  color: #fff;
+  text-align: center;
+  padding: 0.1rem;
+}
+.containerGerarPDF {
+  width: 100%;
+  text-align:justify;
+  padding: 0.8rem;
+  p {
+    &:nth-child(2) {
+     margin-top: 0.8rem;
+    }
+  }
+}
+
+.bt_cancelarPDF {
+  width: 40%;
+  height: 2rem;
+  height: 2rem;
+  margin-left: 5%;
+  font-size: 1.2rem;
+}
+.bt_gerarPDF {
+  width: 40%;
+  height: 2rem;
+  margin-top: 5%;
+  margin-left: 10%;
+  font-size: 1.2rem;
+}
+
+.modalInadimplentes {
+  width: 100%;
+  height: 32rem;
+  overflow: hidden;
+  background: #77a8d4;
+  padding: 0.5rem;
+  border: 2px solid #fff;
+  ul {
+    margin-top: 0.5rem;
+    overflow: auto;
+    height: 22rem;
+    background: #91c7f6;
+    div {
+      display: flex;
+    }
+    p {
+      &:nth-child(1) {
+        width: 60%;
+       }
+       &:nth-child(2) {
+        width: 20%;
+        text-align: center;
+       }
+       &:nth-child(3) {
+        width: 20%;
+        text-align: center;
+       }
+    }
+  }
+  li {
+    padding: 0.3rem;
+    height: 2.7rem;
+    margin-top: 0.7rem;
+    &:nth-child(1n) {
+      /*fazer estilo folha zebra*/
+      background: #c0e4f4;
+    }
+  }
+}
+.titInadimplentes {
+  width: 100%;
+  height: 2.5rem;
+  background: #376389;
+  color: #fff;
+  text-align: center;
+  padding: 0.6rem;
+}
+.cabInadimplentes {
+  width: 100%;
+  background: #77a8d4;
+  height: 3rem;
+  padding: 0.3rem;
+  display: flex;
+  p {
+    &:nth-child(1) {
+      width: 60%;
+      padding-top: 1.3rem;
+     }
+     &:nth-child(2) {
+      width: 20%;
+      text-align: center;
+     }
+     &:nth-child(3) {
+      width: 20%;
+      text-align: center;
+     }
+  }
+}
+
+.bt_fecharInadimplentes {
+  width: 50%;
+  height: 2.2rem;
+  margin-top: 0.5rem;
+  margin-left: 25%;
+  font-size: 1.2rem;
 }
